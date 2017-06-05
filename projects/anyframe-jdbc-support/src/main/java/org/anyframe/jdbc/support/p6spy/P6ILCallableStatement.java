@@ -84,11 +84,11 @@ import com.p6spy.engine.spy.P6Factory;
  */
 public class P6ILCallableStatement extends P6CallableStatement {
 
-	private final InjectionPatternPostProcessor injectionPatternPostProcessor;
+	private InjectionPatternPostProcessor injectionPatternPostProcessor;
 
-	private final CompleteQueryPostProcessor completeQueryPostProcessor;
+	private CompleteQueryPostProcessor completeQueryPostProcessor;
 	
-	private static  boolean log4jdbc=true; 
+	private static  boolean log4jdbc=true;
 	
 	static {
 		try {

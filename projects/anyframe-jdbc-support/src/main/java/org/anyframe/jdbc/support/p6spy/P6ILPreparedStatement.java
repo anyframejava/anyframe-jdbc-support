@@ -156,10 +156,10 @@ import com.p6spy.engine.spy.P6PreparedStatement;
  */
 public class P6ILPreparedStatement extends P6PreparedStatement {
 
-	private final InjectionPatternPostProcessor injectionPatternPostProcessor;
-	private final CompleteQueryPostProcessor completeQueryPostProcessor;
+	private InjectionPatternPostProcessor injectionPatternPostProcessor;
+	private CompleteQueryPostProcessor completeQueryPostProcessor;
 	private static  boolean log4jdbc=true;
-	 
+	
 	static {
 		try {
 			P6ILPreparedStatement.class.getClassLoader().loadClass(

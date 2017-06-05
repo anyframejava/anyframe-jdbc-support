@@ -1,13 +1,8 @@
-#Mon Dec 17 12:11:58 KST 2012
-encoding/src/test/java=UTF-8
-org.eclipse.jdt.core.compiler.compliance=1.5
-encoding/.=UTF-8
-encoding/src/main/resources=UTF-8
-org.eclipse.jdt.core.compiler.problem.forbiddenReference=warning
-encoding/src/main/java=UTF-8
-org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.5
-org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
+#Fri Oct 07 13:47:03 KST 2011
 eclipse.preferences.version=1
-encoding/src/test/resources=UTF-8
-org.eclipse.jdt.core.compiler.source=1.5
+org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.5
+org.eclipse.jdt.core.compiler.compliance=1.5
 org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
+org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
+org.eclipse.jdt.core.compiler.problem.forbiddenReference=warning
+org.eclipse.jdt.core.compiler.source=1.5
