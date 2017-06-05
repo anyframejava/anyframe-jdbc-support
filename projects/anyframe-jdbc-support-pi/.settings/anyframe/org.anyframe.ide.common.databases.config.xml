@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dbexplorer>
+	<dataSource type="hsqldb" name="sampledb" driverJar="db/hsqldb/hsqldb-2.0.0.jar"
+		driverClassName="org.hsqldb.jdbcDriver" url="jdbc:hsqldb:hsql://localhost/sampledb"
+		username="SA" password="" schema="PUBLIC"
+		dialect="org.hibernate.dialect.HSQLDialect" driverGroupId="hsqldb"
+		driverArtifactId="hsqldb" driverVersion="2.0.0" useDbSpecific="false"
+		runExplainPlan="false" isDefault="true"/>
+</dbexplorer> 
