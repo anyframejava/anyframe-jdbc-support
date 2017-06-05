@@ -50,6 +50,7 @@ public class InjectionPatternPostProcessorTest {
 	@ExpectedException(BadSqlGrammarException.class)
 	public void testInjectionPatternPostProcessorWithJdbc() {
 		// initialize data
+		// TODO : SimpleJdbcTemplate is deprecated
 		SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource), new ClassPathResource("testdata.sql"),
 				true);
 
@@ -58,8 +59,8 @@ public class InjectionPatternPostProcessorTest {
 		StringBuffer testSql = new StringBuffer();
 		testSql.append("SELECT LOGON_ID, NAME, PASSWORD FROM TB_USER \n");
 		testSql.append("WHERE LOGON_ID = 'admin' AND PASSWORD = '1' or '1' = '1' -- \n");
-
-		Map<String, Object> resultMap = jdbcTemplate.queryForMap(testSql.toString());
+		
+		jdbcTemplate.queryForMap(testSql.toString());
 		fail("Changed sql by replacePatterns should be SQL Syntax Error");
 
 		// org.anyframe.jdbc.support.CompleteQueryPostProcessor Logger

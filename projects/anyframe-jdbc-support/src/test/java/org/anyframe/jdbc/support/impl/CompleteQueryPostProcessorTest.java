@@ -30,6 +30,7 @@ public class CompleteQueryPostProcessorTest {
 
 	@Before
 	public void onSetUp() {
+		// TODO : SimpleJdbcTemplate is deprecated
 		SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource), new ClassPathResource("testdata.sql"),
 				true);
 	}

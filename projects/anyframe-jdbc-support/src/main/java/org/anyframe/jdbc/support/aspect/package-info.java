@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2011 the original author or authors.
+ * Copyright 2002-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.anyframe.plugin.core.moviefinder.service;
-
-import java.util.List;
-
-import org.anyframe.plugin.core.domain.Genre;
-
 /**
- * This GenreService class is an Interface class to provide genre list
- * functionality.
- * 
- * @author Sooyeon Park
+ * Provides implement classes for processing some functions with Complete Query.
+ *  
+ * @since 1.0.0
  */
-public interface GenreService {
-	List<Genre> getList() throws Exception;
-}
+package org.anyframe.jdbc.support.aspect;

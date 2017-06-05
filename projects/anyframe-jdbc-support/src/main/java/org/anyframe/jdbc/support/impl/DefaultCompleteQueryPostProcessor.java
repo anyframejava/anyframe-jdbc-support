@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2008 the original author or authors.
+ * Copyright 2002-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 package org.anyframe.jdbc.support.impl;
 
 import org.anyframe.jdbc.support.CompleteQueryPostProcessor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Default Implementation of CompleteQueryPostProcessor
@@ -30,16 +30,14 @@ public class DefaultCompleteQueryPostProcessor implements CompleteQueryPostProce
 	/**
 	 * Logger with CompleteQueryPostProcessor.class
 	 */
-	protected static Log log = LogFactory.getLog(CompleteQueryPostProcessor.class);
-
+	protected static Logger log = LoggerFactory.getLogger(CompleteQueryPostProcessor.class);
+	
 	/**
 	 * default implementation of processing function for Complete Query - just
 	 * log Complete Query with commons logging INFO Level
 	 */
 	public void processCompleteQuery(String sql) {
-		if (log.isInfoEnabled()) {
-			log.info(sql);
-		}
+		log.info(sql);
 	}
 
 }

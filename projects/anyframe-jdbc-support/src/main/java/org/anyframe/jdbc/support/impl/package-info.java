@@ -13,21 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.anyframe.jdbc.support;
-
 /**
- * This is a Interface for processing some functions (ex. CompleteQuery Logging)
- * with Complete Query. Using P6Spy Connection Wrapping.
- * 
- * @author Byunghun Woo
- * 
+ * Provide aspect class for JDBC Connection Wrapping
+ *  
+ * @since 1.0.0
  */
-public interface CompleteQueryPostProcessor {
-
-	/**
-	 * process some functions (ex. CompleteQuery Logging)
-	 * @param sql Complete Query
-	 */
-	public void processCompleteQuery(String sql);
-
-}
+package org.anyframe.jdbc.support.impl;

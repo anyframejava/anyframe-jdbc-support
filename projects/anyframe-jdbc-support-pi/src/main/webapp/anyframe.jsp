@@ -5,7 +5,7 @@
   	<div id="container">
     	<div class="main_greeting">
         	<dl>
-                <dt>Welcome to Anyframe 5.1.0</dt>
+                <dt>Welcome to Anyframe 5.2.0</dt>
                 <dd>Congratulations! Anyframe application has been successfully installed. Anyframe is an open source project and application framework that provides basic architecture, common technical services, templates to help you develop web applications on the Java platform quickly and efficiently.</dd>
             </dl>
         </div>
@@ -22,7 +22,7 @@
                 	<th>Installed Plugins</th>
                     <td>
                     	<ul>
-                            <li>JDBC Support 1.0.1</li>
+                            <li>JDBC Support 1.0.2</li>
                         </ul>
                         <!--Add new menu here-->
                     </td>

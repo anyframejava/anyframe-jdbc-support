@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2008 the original author or authors.
+ * Copyright 2002-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.anyframe.jdbc.support.InjectionPatternPostProcessor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Default Implementation of InjectionPatternPostProcessor
@@ -43,7 +43,9 @@ public class DefaultInjectionPatternPostProcessor implements InjectionPatternPos
 	/**
 	 * Logger with InjectionPatternPostProcessor.class
 	 */
-	protected static Log log = LogFactory.getLog(InjectionPatternPostProcessor.class);
+//	protected static Log log = LogFactory.getLog(InjectionPatternPostProcessor.class);
+	
+	protected static Logger log = LoggerFactory.getLogger(InjectionPatternPostProcessor.class);
 
 	private List<String> warningPatterns;
 
@@ -64,7 +66,10 @@ public class DefaultInjectionPatternPostProcessor implements InjectionPatternPos
 			String wholeRegexPattern = MULTILINE_IGNORE_PREFIX + pattern + MULTILINE_IGNORE_SUFFIX;
 
 			if (sql.matches(wholeRegexPattern)) {
-				log.warn("SQL Injection pattern detected. - pattern : " + pattern + " , sql : " + sql);
+				log
+						.warn(
+								"SQL Injection pattern detected. - pattern : {} , sql : {}",
+								new Object[] { pattern, sql });
 			}
 		}
 	}

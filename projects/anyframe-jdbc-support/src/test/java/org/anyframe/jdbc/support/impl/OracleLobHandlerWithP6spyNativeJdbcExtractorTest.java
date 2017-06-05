@@ -42,6 +42,7 @@ public class OracleLobHandlerWithP6spyNativeJdbcExtractorTest {
 
 	@Before
 	public void onSetUp() {
+		// TODO : SimpleJdbcTemplate is deprecated
 		SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource), new ClassPathResource(
 				"testdata_oracle_lob.sql"), true);
 	}
