@@ -265,6 +265,8 @@ public class P6ILCallableStatement extends P6CallableStatement {
 		else {
 			method = ReflectionUtils.findMethod(passthru.getClass(), "setExecuteBatch", new Class[] { int.class });
 		}
+		// 2011.08.29 - for ojdbc6 - makeAccessible
+		ReflectionUtils.makeAccessible(method);
 		ReflectionUtils.invokeMethod(method, stmt == null ? passthru : stmt, new Object[] { new Integer(paramInt) });
 	}
 		

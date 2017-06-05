@@ -4,7 +4,7 @@
     <groupId>org.anyframe.plugin</groupId>
     <artifactId>anyframe-jdbc-support-pi</artifactId>
     <packaging>war</packaging>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>jdbc-support</name>
     <dependencies>
         <dependency>
@@ -18,19 +18,19 @@
             <version>1.0.0.Final</version>
         </dependency>
         <dependency>
-            <groupId>ehcache</groupId>
+            <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-            <version>1.6.2</version>
+            <version>2.2.0</version>
         </dependency>
         <dependency>
             <groupId>org.anyframe</groupId>
             <artifactId>anyframe-core</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.3</version>
         </dependency>
         <dependency>
             <groupId>org.anyframe</groupId>
             <artifactId>anyframe-jdbc-support</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
 			<groupId>p6spy</groupId>
@@ -250,7 +250,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>anyframe-maven-plugin</artifactId>
-                <version>2.0.2</version>
+                <version>2.1.0</version>
                 <dependencies>
                     <dependency>
                         <groupId>hsqldb</groupId>

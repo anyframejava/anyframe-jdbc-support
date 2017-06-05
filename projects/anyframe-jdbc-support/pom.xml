@@ -10,7 +10,7 @@
 
 	<groupId>org.anyframe</groupId>
 	<artifactId>anyframe-jdbc-support</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 
 
 	<dependencies>

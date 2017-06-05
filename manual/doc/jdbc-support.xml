@@ -35,7 +35,7 @@
 			<year>2007-2011</year>
 			<holder>삼성SDS</holder>
 		</copyright>
-		<releaseinfo>Version 1.0.0</releaseinfo>
+		<releaseinfo>Version 1.0.1</releaseinfo>
 
 		<productname>Anyframe Jdbc Support Plugin</productname>
 		
@@ -83,7 +83,7 @@
 					</thead>
 					<tbody>
 						<row>
-							<entry align="center"><ulink url="http://dev.anyframejava.org/docs/anyframe/plugin/essential/core/1.0.1/reference/htmlsingle/core.html">core</ulink></entry>
+							<entry align="center"><ulink url="http://dev.anyframejava.org/docs/anyframe/plugin/essential/core/1.0.3/reference/htmlsingle/core.html">core</ulink></entry>
 							<entry align="center" valign="middle">2.0.0 > *</entry>
 						</row>
 					</tbody>
@@ -97,7 +97,7 @@
 		<partintro>
 		    <para>
 		    	최종 실행된 SQL 문을 로깅(또는 재처리)하거나 쿼리 실행 시 SQL Injection 패턴을 판별하고 이에 대해 Warning 또는 Replace 처리를 제공하여 보안 위협을 경감시킬 수 있는 기능을  제공하는
-		    	anyframe-jdbc-support 에 대해 설명한다. sql logging 기능을 제공하는 유사한 오픈소스 (log4jdbc) 와의 차이점과 ajdbc-support 의 설정 및 유의사항 등에 대해 아래의 항목별로 나누어 설명하고자 한다.  
+		    	anyframe-jdbc-support 에 대해 설명한다. sql logging 기능을 제공하는 유사한 오픈소스 (log4jdbc) 와의 차이점과 jdbc-support 의 설정 및 유의사항 등에 대해 아래의 항목별로 나누어 설명하고자 한다.  
 		    </para>
 		    <itemizedlist>
 		      	<listitem>
