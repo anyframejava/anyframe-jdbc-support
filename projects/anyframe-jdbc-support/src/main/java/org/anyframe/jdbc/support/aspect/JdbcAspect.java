@@ -12,16 +12,14 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-*/
+ */
 package org.anyframe.jdbc.support.aspect;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.anyframe.jdbc.support.CompleteQueryPostProcessor;
-import org.anyframe.jdbc.support.InjectionPatternPostProcessor;
-import org.anyframe.jdbc.support.p6spy.P6ILConnection;
-import org.anyframe.jdbc.support.p6spy.P6ILFactory;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
@@ -39,16 +37,16 @@ import com.p6spy.engine.spy.P6Factory;
  */
 public class JdbcAspect implements MethodInterceptor, InitializingBean {
 
-	private P6Factory factory;
+	private List<P6Factory> factories;
 
-	private InjectionPatternPostProcessor injectionPatternPostProcessor;
-
-	private CompleteQueryPostProcessor completeQueryPostProcessor;
+	// private InjectionPatternPostProcessor injectionPatternPostProcessor;
+	//
+	// private CompleteQueryPostProcessor completeQueryPostProcessor;
 
 	private static Logger log = LoggerFactory.getLogger(JdbcAspect.class);
 
 	/**
-	 * {@inheritDoc}
+	 * Decorate the connection
 	 */
 	public Object invoke(MethodInvocation jp) throws Throwable {
 		Object rtObject = jp.proceed();
@@ -57,14 +55,16 @@ public class JdbcAspect implements MethodInterceptor, InitializingBean {
 		}
 		Connection con = (Connection) rtObject;
 
-		if (!(con instanceof P6ILConnection)) {
-			try {
+		// TODO check already proxy
+		// if (!(con instanceof P6ILConnection)) {
+		try {
+			for (P6Factory factory : factories) {
 				con = factory.getConnection(con);
 			}
-			catch (SQLException sqlex) {
-				log.error("Failed to wrap Connection with the P6 connection", sqlex);
-			}
+		} catch (SQLException sqlex) {
+			log.error("Failed to wrap Connection with the P6 connection", sqlex);
 		}
+		// }
 		return con;
 	}
 
@@ -72,31 +72,45 @@ public class JdbcAspect implements MethodInterceptor, InitializingBean {
 	 * Using P6ILFactory
 	 */
 	public void afterPropertiesSet() {
-		this.factory = new P6ILFactory(injectionPatternPostProcessor, completeQueryPostProcessor);
+		if (this.factories == null) {
+			// init with defaults
+			// this.factory = new P6ILFactory(injectionPatternPostProcessor, completeQueryPostProcessor);
+		}
 	}
 
-	public InjectionPatternPostProcessor getInjectionPatternPostProcessor() {
-		return injectionPatternPostProcessor;
+	public void setFactories(List<P6Factory> factories) {
+		this.factories = factories;
 	}
 
-	/**
-	 * set InjectionPatternPostProcessor
-	 * @param injectionPatternPostProcessor
-	 */
-	public void setInjectionPatternPostProcessor(InjectionPatternPostProcessor injectionPatternPostProcessor) {
-		this.injectionPatternPostProcessor = injectionPatternPostProcessor;
+	public void setFactory(P6Factory factory) {
+		this.factories = new ArrayList<P6Factory>();
+		this.factories.add(factory);
 	}
 
-	public CompleteQueryPostProcessor getCompleteQueryPostProcessor() {
-		return completeQueryPostProcessor;
-	}
-
-	/**
-	 * set CompleteQueryPostProcessor
-	 * @param completeQueryPostProcessor
-	 */
-	public void setCompleteQueryPostProcessor(CompleteQueryPostProcessor completeQueryPostProcessor) {
-		this.completeQueryPostProcessor = completeQueryPostProcessor;
-	}
+	// public InjectionPatternPostProcessor getInjectionPatternPostProcessor() {
+	// return injectionPatternPostProcessor;
+	// }
+	//
+	// /**
+	// * set InjectionPatternPostProcessor
+	// *
+	// * @param injectionPatternPostProcessor
+	// */
+	// public void setInjectionPatternPostProcessor(InjectionPatternPostProcessor injectionPatternPostProcessor) {
+	// this.injectionPatternPostProcessor = injectionPatternPostProcessor;
+	// }
+	//
+	// public CompleteQueryPostProcessor getCompleteQueryPostProcessor() {
+	// return completeQueryPostProcessor;
+	// }
+	//
+	// /**
+	// * set CompleteQueryPostProcessor
+	// *
+	// * @param completeQueryPostProcessor
+	// */
+	// public void setCompleteQueryPostProcessor(CompleteQueryPostProcessor completeQueryPostProcessor) {
+	// this.completeQueryPostProcessor = completeQueryPostProcessor;
+	// }
 
 }

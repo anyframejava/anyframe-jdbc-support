@@ -1,0 +1,257 @@
+##################################################
+########## DAO VO Template for Query Service
+##### support Use 'is' prefix for getters that return boolean, 2012.01.03
+##################################################
+#macro( appenddesc $desc $indentStr)
+#set($lineList = [])
+#set($lineList = $desc.split("\r\n"))
+#foreach($line in $lineList)
+${indentStr}* ${line}
+#end
+#end##end of appenddesc
+#if (${packageText} != "")
+package ${packageText};
+#end
+
+import java.util.Map;
+import java.util.HashMap;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
+#foreach($importStatement in $importStatements)
+import ${importStatement};
+#end
+
+## import com.anyframe.framework.vo.SearchVO;
+import com.anyframe.framework.vo.VOUtil;
+
+/**
+#appenddesc($!{voDescription} " ")
+ *
+#if(!$StringUtil.isEmptyOrNull($voClassNameKo))
+ * @name_ko ${voClassNameKo}
+#end
+ * @stereotype $!{type}
+ * @author $!{author}
+ */
+@SuppressWarnings({"serial", "unchecked"})
+public class ${voClassName} {
+
+#foreach($column in $tableColumn)
+#if ($column.getKorName() != "" || $column.getDescription() != "" || $column.getLength() != "" || $column.getInitValue() != "" || $column.getArrayCount() != "" || $column.getScale() != "")
+	/**
+#end
+#if ($column.getDescription() != "")
+	 * $column.getDescription()
+#end
+#if ($column.getKorName() != "")
+	 * @name_ko $column.getKorName()
+#end
+#if ($column.getLength() != "")
+	 * @length $column.getLength()
+#end
+#if ($column.getScale() != "")
+	 * @scale $column.getScale()
+#end
+#if ($column.getInitValue() != "")
+	 * @initValue $column.getInitValue()
+#end
+#if ($column.getArrayCount() != "")
+	 * @arrayCount $column.getArrayCount()
+#end
+#if ($column.getKorName() != "" || $column.getDescription() != "" || $column.getLength() != "" || $column.getInitValue() != "" || $column.getArrayCount() != "" || $column.getScale() != "")
+	 */
+#end
+#if ($column.getDataType() == "Blob" || $column.getDataType() == "Clob")
+    private String $column.getAttributeLower();
+#elseif ($column.getDataTypeQN() == "java.util.ArrayList" || $column.getDataTypeQN() == "java.util.List")
+    private List<$column.getRefClassOnlyClassName()> $column.getAttributeLower();
+#elseif ($column.getInitValue() != "" && $column.getDataTypeQN() != "java.sql.Date" && $column.getDataTypeQN() != "java.sql.Timestamp")
+#if ($column.getDataTypeQN() == "java.math.BigDecimal" || $column.getDataTypeQN() == "java.math.BigInteger")
+    private $column.getDataType() $column.getAttributeLower() = new $column.getDataType()("${column.getInitValue()}");
+#elseif ($column.getDataTypeQN() == "int" || $column.getDataTypeQN() == "boolean")
+    private $column.getDataType() $column.getAttributeLower() = $column.getInitValue();
+#else
+    private $column.getDataType() $column.getAttributeLower() = "${column.getInitValue()}";
+#end
+#else
+	private $column.getDataType() $column.getAttributeLower();
+#end
+
+#end
+
+#foreach($column in $tableColumn)
+#if ($column.getDataType() == "Blob" || $column.getDataType() == "Clob")
+    public String get$column.getAttributeUpper()() {
+        return $column.getAttributeLower();
+    }
+
+    public void set$column.getAttributeUpper()(String $column.getAttributeLower()) {
+        this.$column.getAttributeLower() = $column.getAttributeLower();
+    }
+#else
+#if ($column.getKorName() != "")
+	/**
+	 * $column.getKorName() Getter Method
+	 *
+	 * @name_ko $column.getKorName() Getter Method
+	 * @return $column.getKorName()
+	 */
+#end
+#if ($column.getDataTypeQN() == "java.util.ArrayList" || $column.getDataTypeQN() == "java.util.List")
+    public  List<$column.getRefClassOnlyClassName()> get$column.getAttributeUpper()() {
+        return $column.getAttributeLower();
+    }
+#elseif($column.getDataType() == "boolean")
+	public $column.getDataType()#if($StringUtil.isEmptyOrNull($booleanGetterPrefix)) get#else ${booleanGetterPrefix}#end$column.getAttributeUpper()() {
+		return $column.getAttributeLower();
+	}
+#else
+    public $column.getDataType() get$column.getAttributeUpper()() {
+        return $column.getAttributeLower();
+    }
+#end
+
+#if ($column.getKorName() != "")
+	/**
+	 * $column.getKorName() Setter Method
+	 *
+	 * @name_ko $column.getKorName() Setter Method
+	 * @param $column.getDataType() $column.getKorName()
+	 */
+#end
+#if ($column.getDataTypeQN() == "java.util.ArrayList" || $column.getDataTypeQN() == "java.util.List")
+    public void set$column.getAttributeUpper()(List<$column.getRefClassOnlyClassName()> $column.getAttributeLower()) {
+        this.$column.getAttributeLower() = $column.getAttributeLower();
+    }
+#else
+    public void set$column.getAttributeUpper()($column.getDataType() $column.getAttributeLower()) {
+        this.$column.getAttributeLower() = $column.getAttributeLower();
+    }
+#end
+
+#end
+#end
+
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}
+
+    /**
+     * convert Map to VO
+     *
+     * @name_ko	Map->VO transform method
+     * @param Source Map
+     */
+    public void fromMap(Map map){
+##		super.fromMap(map);
+#foreach($column in $tableColumn)
+#if ($column.getDataType() == "int")
+		set$column.getAttributeUpper()(VOUtil.getInt(map, "$column.getAttributeLower()"));
+#elseif ($column.getDataType()=="byte[]")
+		set$column.getAttributeUpper()((byte[])map.get("$column.getAttributeLower()"));
+#elseif ($column.getDataTypeQN()=="java.util.Date")
+		set$column.getAttributeUpper()(VOUtil.getUtilDate(map, "$column.getAttributeLower()"));
+#elseif  ($column.getRefClass())
+#if ($column.getDataTypeQN() == "java.util.ArrayList" || $column.getDataTypeQN() == "java.util.List")
+#if ($column.isMapConvertible())
+	    if (map.get("$column.getAttributeLower()") != null) {
+		    $column.getAttributeLower() = new ArrayList();
+		    ArrayList $column.getAttributeLower()s = (ArrayList)map.get("$column.getAttributeLower()");
+		    for(int i=0;i<${column.getAttributeLower()}s.size();i++){
+			    $column.getRefClassOnlyClassName() $StringUtil.toLowerFirstLetter($column.getRefClassOnlyClassName()) = new $column.getRefClassOnlyClassName()();
+			    ${StringUtil.toLowerFirstLetter($column.getRefClassOnlyClassName())}.fromMap((Map)${column.getAttributeLower()}s.get(i));
+			    this.${column.getAttributeLower()}.add($StringUtil.toLowerFirstLetter($column.getRefClassOnlyClassName()));
+		    }
+	    }
+#else
+	    if (map.get("$column.getAttributeLower()") != null) {
+		    set$column.getAttributeUpper()(($column.getDataType())map.get("$column.getAttributeLower()"));
+	    }
+#end
+#elseif ($column.getDataType().indexOf("[]") != -1)
+#if ($column.isMapConvertible())
+	    if (map.get("$column.getAttributeLower()") != null) {
+		    Map[] $column.getAttributeLower()s = (Map[])map.get("$column.getAttributeLower()");
+		    $column.getAttributeLower() = new ${column.getRefClassOnlyClassName()}[${column.getAttributeLower()}s.length];
+		    for(int i=0;i<${column.getAttributeLower()}s.length;i++){
+			    $column.getRefClassOnlyClassName() $StringUtil.toLowerFirstLetter($column.getRefClassOnlyClassName()) = new $column.getRefClassOnlyClassName()();
+			    ${StringUtil.toLowerFirstLetter($column.getRefClassOnlyClassName())}.fromMap(${column.getAttributeLower()}s[i]);
+			    this.${column.getAttributeLower()}[i] = $StringUtil.toLowerFirstLetter($column.getRefClassOnlyClassName());
+		    }
+	    }
+#else
+#if ($column.getDataType()=="String[]")
+		set$column.getAttributeUpper()(VOUtil.getStringArray(map, "$column.getAttributeLower()"));
+#else
+        if (map.get("$column.getAttributeLower()") != null)
+		    set$column.getAttributeUpper()(($column.getDataType())map.get("$column.getAttributeLower()"));
+#end
+#end
+#else
+	    if (map.get("$column.getAttributeLower()") != null) {
+		    $column.getAttributeLower() = new $column.getRefClassOnlyClassName()();
+		    ${column.getAttributeLower()}.fromMap((Map)map.get("$column.getAttributeLower()"));
+	    }
+#end
+#else
+		set$column.getAttributeUpper()(VOUtil.get$StringUtil.capitalizeFirstLetter($column.getDataType())(map, "$column.getAttributeLower()"));
+#end
+#end
+    }
+
+    /**
+     * convert VO to Map
+     *
+     * @name_ko VO->Map transform method
+     * @return Map converted Map
+     */
+    public Map toMap(){
+    	Map result = new HashMap();
+#foreach($column in $tableColumn)
+##if ($column.getDataType() == "int" || $column.getDataTypeQN() == "java.math.BigDecimal" || $column.getDataTypeQN() == "java.math.BigInteger")
+##        result.put("$column.getAttributeLower()",get$column.getAttributeUpper()());
+##elseif  ($column.getRefClass())
+#if ($column.getRefClass())
+#if ($column.getDataTypeQN() == "java.util.ArrayList" || $column.getDataTypeQN() == "java.util.List")
+#if ($column.isMapConvertible())
+        if ($column.getAttributeLower()!=null) {
+            ArrayList $column.getAttributeLower()s = new ArrayList();
+            for(int i=0;i<this.$column.getAttributeLower() .size();i++){
+                $column.getRefClassOnlyClassName() $StringUtil.toLowerFirstLetter($column.getRefClassOnlyClassName()) = ($column.getRefClassOnlyClassName()) this.${column.getAttributeLower()}.get(i);
+                ${column.getAttributeLower()}s.add(${StringUtil.toLowerFirstLetter(${column.getRefClassOnlyClassName()})}.toMap());
+            }
+            result.put("$column.getAttributeLower()",$column.getAttributeLower()s);
+        }
+#else
+        if ($column.getAttributeLower()!=null) {
+            result.put("$column.getAttributeLower()",get$column.getAttributeUpper()());
+        }
+#end
+#elseif ($column.getDataType().indexOf("[]") != -1)
+#if ($column.isMapConvertible())
+        if ($column.getAttributeLower()!=null) {
+            Map[] $column.getAttributeLower()s = new Map[this.${column.getAttributeLower()}.length];
+            for(int i=0;i<this.${column.getAttributeLower()}.length;i++){
+                $column.getRefClassOnlyClassName() $StringUtil.toLowerFirstLetter($column.getRefClassOnlyClassName()) = ($column.getRefClassOnlyClassName()) this.${column.getAttributeLower()}[i];
+                ${column.getAttributeLower()}s[i] = ${StringUtil.toLowerFirstLetter(${column.getRefClassOnlyClassName()})}.toMap();
+            }
+            result.put("$column.getAttributeLower()",$column.getAttributeLower()s);
+        }
+#else
+        if ($column.getAttributeLower()!=null)
+		    result.put("$column.getAttributeLower()",get$column.getAttributeUpper()());
+#end
+#else
+        if ($column.getAttributeLower()!=null)
+            result.put("$column.getAttributeLower()",${column.getAttributeLower()}.toMap());
+#end
+#elseif($column.getDataType() == "boolean")
+		result.put("$column.getAttributeLower()",#if($StringUtil.isEmptyOrNull($booleanGetterPrefix)) get#else ${booleanGetterPrefix}#end$column.getAttributeUpper()());
+#else
+        result.put("$column.getAttributeLower()",get$column.getAttributeUpper()());
+#end
+#end
+        return result;
+    }
+}

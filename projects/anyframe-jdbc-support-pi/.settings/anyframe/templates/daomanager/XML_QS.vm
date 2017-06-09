@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queryservice xmlns="http://www.anyframejava.org/schema/query/mapping" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.anyframejava.org/schema/query/mapping http://www.anyframejava.org/schema/query/mapping/anyframe-query-mapping-1.0.xsd ">
+<!--
+    SQL File Name : mapper_${dao.name}_sql.xml 
+    Description : #foreach($eachline in ${dao.descriptionLines})
+                                     ${eachline}
+                  		#end
+Modification Information : $date.get('yyyy-MM-dd') ($!{dao.userId}) 최초 생성
+-->
+	<queries>	
+#foreach($method in $dao.methodInfoList)
+#set($sqlMapId = ${method.sqlId})
+#set($type = ${method.type})
+#if($type == "select" || $type == "list" || $type == "paging")   
+	    <!--
+	        SQL Name : ${sqlMapId} ($!{method.localName}) 
+	        Description : #foreach($eachline in ${method.descriptionLines})
+	                                          ${eachline}
+	                      	  #end
+	        Modification Information : $date.get('yyyy-MM-dd') ($!{dao.userId}) 최초 생성
+	    -->
+		<query id="${sqlMapId}" >
+			<statement>
+#foreach($eachLine in ${method.sqlLines})
+			${eachLine}
+#end
+			</statement>
+			<result class="$util.generic(${method.qualifiedReturnType})" />
+		</query>
+#end
+#if($type == "insert" || $type == "update" || $type == "delete" || $type == "insertBatch" || $type == "updateBatch" || $type == "deleteBatch" || $type == "executeBatch")
+	    <!--
+	        SQL Name : ${sqlMapId} ($!{method.localName}) 
+	        Description : #foreach($eachline in ${method.descriptionLines})
+	                                          ${eachline}
+	                      #end
+	parameterType : ${method.parameter.qualifiedName}
+	        Modification Information : $date.get('yyyy-MM-dd') ($!{dao.userId}) 최초 생성
+	    -->	
+		<query id="${sqlMapId}">
+			<statement>
+#foreach($eachLine in ${method.sqlLines})
+			${eachLine}
+#end
+			</statement>
+		</query>
+#end
+#end
+	</queries>
+</queryservice>

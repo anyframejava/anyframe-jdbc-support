@@ -58,71 +58,44 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-package org.anyframe.jdbc.support.p6spy;
+package org.anyframe.jdbc.support.p6spy.logging;
 
-import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import org.anyframe.jdbc.support.CompleteQueryPostProcessor;
-import org.anyframe.jdbc.support.InjectionPatternPostProcessor;
 
-import com.p6spy.engine.spy.P6Connection;
-import com.p6spy.engine.spy.P6CoreFactory;
-import com.p6spy.engine.spy.P6Statement;
+import com.p6spy.engine.proxy.ProxyFactory;
+import com.p6spy.engine.spy.P6Factory;
+import com.p6spy.engine.spy.P6LoadableOptions;
+import com.p6spy.engine.spy.option.P6OptionsRepository;
 
 /**
- * P6Spy Connection Factory Extension for jdbc support functions
- * (InjectionPattern, CompleteQuery)
+ * P6Spy Connection Factory Extension for jdbc support functions (CompleteQuery)
  *
  * @author Changje Kim
  * @author Byunghun Woo
  *
  */
-public class P6ILFactory extends P6CoreFactory { 
-
-	private final InjectionPatternPostProcessor injectionPatternPostProcessor;
+public class P6CompleteQueryFactory implements P6Factory {
 
 	private final CompleteQueryPostProcessor completeQueryPostProcessor;
 
-	public P6ILFactory(InjectionPatternPostProcessor injectionPatternPostProcessor,
-			CompleteQueryPostProcessor completeQueryPostProcessor) {
-		this.injectionPatternPostProcessor = injectionPatternPostProcessor;
+	public P6CompleteQueryFactory(CompleteQueryPostProcessor completeQueryPostProcessor) {
 		this.completeQueryPostProcessor = completeQueryPostProcessor;
 	}
 
 	@Override
 	public Connection getConnection(Connection conn) throws SQLException {
-		return new P6ILConnection(this, conn, injectionPatternPostProcessor);
-	}
-
-	@Override
-	public PreparedStatement getPreparedStatement(PreparedStatement real, P6Connection conn, String sql)
-			throws SQLException {
-		return new P6ILPreparedStatement(this, real, conn, sql, injectionPatternPostProcessor,
+		P6CompleteQueryConnectionInvocationHandler invocationHandler = new P6CompleteQueryConnectionInvocationHandler(conn,
 				completeQueryPostProcessor);
+		return ProxyFactory.createProxy(conn, invocationHandler);
 	}
 
 	@Override
-	public Statement getStatement(Statement statement, P6Connection conn) throws SQLException {
-		return new P6ILStatement(this, statement, conn, injectionPatternPostProcessor, completeQueryPostProcessor);
-	}
-
-	@Override
-	public CallableStatement getCallableStatement(CallableStatement real, P6Connection conn, String sql)
-			throws SQLException {
-		return new P6ILCallableStatement(this, real, conn, sql, injectionPatternPostProcessor,
-				completeQueryPostProcessor);
-	}
-
-	@Override
-	public ResultSet getResultSet(ResultSet real, P6Statement statement, String preparedQuery, String query)
-			throws SQLException {
-		// disable resultset logging
-		return real;
+	public P6LoadableOptions getOptions(P6OptionsRepository optionsRepository) {
+		// DataSource를 P6Spy로 Wrapping해서 사용할 때 필요한 메소드
+		throw new UnsupportedOperationException();
 	}
 
 }

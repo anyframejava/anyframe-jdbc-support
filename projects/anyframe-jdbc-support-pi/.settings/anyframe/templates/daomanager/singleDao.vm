@@ -1,0 +1,18 @@
+#if($packageName != "")package ${packageName};#end
+
+#if($superClassName != "")import ${superClassName};#end
+
+/**
+#if($classDescription != "")
+ * ${classDescription}
+#end
+#if($classDescription != "")
+ * @localName ${localName}
+#end
+ * @daoType
+ */ 
+##if(!$StringUtil.isEmptyOrNull(${localName}))
+##@LocalName("${localName}")
+##end
+public class ${className} #if($superClassName!="")extends ${superClassShortName}#end{	
+}

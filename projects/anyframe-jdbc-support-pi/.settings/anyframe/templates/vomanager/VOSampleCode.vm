@@ -1,0 +1,27 @@
+## #macro(upperFirstString $name)
+## $name.substring(0,1).toUpperCase()$name.substring(1,$name.length())##
+## #end##end of macro upperFirstString
+## #macro(lowerFirstString $name)
+## ${name.substring(0,1).toLowerCase()}$name.substring(1,$name.length())##
+## #end##end of macro lowerFirstString
+#macro(getDesc $desc)
+#if(!$StringUtil.isEmptyOrNull($desc))
+	// $desc#end
+
+#end##end of macro getDesc
+## process main VO's fields
+	${voClassName} $StringUtil.toLowerFirstLetter(${voClassName}) = new ${voClassName}();
+#foreach($ied in $list)
+	${StringUtil.toLowerFirstLetter(${voClassName})}.set$StringUtil.getAccessorName(${ied.name})(sampleVO.get$StringUtil.capitalizeFirstLetter(${ied.name})());#getDesc($ied.nameKo)
+#end
+## process fields with children
+#foreach($ied in $list)
+#if(!$StringUtil.isEmptyOrNull($ied.refClass))
+#set($voClassName = $StringUtil.unqualifyJavaName($ied.refClass))
+
+	${voClassName} $StringUtil.toLowerFirstLetter(${voClassName}) = new ${voClassName}();
+#foreach($ied in $ied.getChildren())
+	${StringUtil.toLowerFirstLetter(${voClassName})}.set$StringUtil.getAccessorName(${ied.name})(sampleVO.get$StringUtil.capitalizeFirstLetter(${ied.name})());#getDesc($ied.nameKo)
+#end
+#end
+#end

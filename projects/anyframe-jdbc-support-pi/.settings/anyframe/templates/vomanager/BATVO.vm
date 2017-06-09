@@ -1,0 +1,186 @@
+####################################################################
+##### Default VO Template for Anyframe Enterprise
+##### support @NotNull annotation with message property, 2011.06.28
+##### can use field name as key instead of field order index, 2011.07.13
+##### support @DefaultValue annotation, 2011.07.21
+##### consider reserved words for empty String(""), 2011.11.07
+##### support @ArraySize(variable==true), 2011.11.23
+##### support Use 'is' prefix for getters that return boolean, 2012.01.03
+####################################################################
+#set($useIndexAsKey = false)##true: numeric index / false: field name string
+#macro(generic $calssName)
+#if($StringUtil.isEmptyOrNull($calssName))#else<$calssName>#end
+#end
+#macro(getKey $indexNum $fieldItem)
+#if($useIndexAsKey)$indexNum#else"$fieldItem.getAttributeLower()"#end
+#end##end of getKey
+#macro( appenddesc $desc $indentStr)
+#set($lineList = [])
+#set($lineList = $desc.split("\r\n"))
+#foreach($line in $lineList)
+${indentStr}* ${line}
+#end
+#end##end of appenddesc
+#set($Integer = 0)
+#if(${packageText} != "")
+package ${packageText};
+#end
+#set($hasScale = false)
+#set($hasArraySize = false)
+#set($hasNotNull = false)
+#set($hasDefaultValue = false)
+#set($validation = false)
+
+#foreach($column in $tableColumn)
+#if(!$StringUtil.isEmptyOrNull($column.getArrayCount()) || $column.isVariableArraySize())
+#set($hasArraySize = true)
+#end
+#if($StringUtil.isEmptyOrNull($column.getScale()) == false)
+#set($hasScale = true)
+#end
+#if($StringUtil.isEmptyOrNull($column.getInitValue()) == false)
+#set($hasDefaultValue = true)
+#end
+#if($column.isNotNull())
+#set($hasNotNull = true)
+#end
+#if(!$StringUtil.isEmptyOrNull($column.getValidations()))
+#set($validation = true)
+#end
+#end
+
+#if($hasArraySize == true)
+import com.anyframe.online.core.annotation.ArraySize;
+#end
+#if($hasScale == true)
+import com.anyframe.online.core.annotation.Scale;
+#end
+#if($hasNotNull == true)
+import javax.validation.constraints.NotNull;
+#end
+#if($validation == true)
+import javax.validation.constraints.*;
+#end
+#if($isValid == true)
+import javax.validation.*;
+#end
+
+
+#if($hasDefaultValue == true)
+import com.anyframe.online.core.annotation.DefaultValue;
+#end
+import com.anyframe.online.core.annotation.Length;
+import com.anyframe.online.core.annotation.LocalName;
+import com.anyframe.online.core.vo.AbstractVo;
+#foreach($importStatement in $importStatements)
+import ${importStatement};
+#end
+
+/**
+#if(!$StringUtil.isEmptyOrNull(${voClassNameKo}))
+ * @name_ko ${voClassNameKo}
+#end
+#if(!$StringUtil.isEmptyOrNull(${voDescription}))
+ * @desc ${voDescription}
+#end
+## * @stereotype $type
+ * @author $!author
+ * @voType
+ */
+public class ${voClassName} extends AbstractVo {
+
+#foreach($column in $tableColumn)
+#if(!$StringUtil.isEmptyOrNull($column.getDescription()))
+    /**
+#end
+#if(!$StringUtil.isEmptyOrNull($column.getDescription()))
+     * $column.getDescription()
+#end
+#if(!$StringUtil.isEmptyOrNull($column.getDescription()))
+     */
+#end
+## START : declare annotation
+	#if(!$StringUtil.isEmptyOrNull($column.getKorName()))
+@LocalName("$column.getKorName()") #end
+#if(!$StringUtil.isEmptyOrNull($column.getLength()))
+	@Length($column.getLength()) #end
+#if(!$StringUtil.isEmptyOrNull($column.getScale()))
+	@Scale($column.getScale()) #end
+#if(!$StringUtil.isEmptyOrNull($column.getInitValue()))
+	@DefaultValue("#if(!(($column.getDataTypeQN()=="java.lang.String") && ($column.getInitValue()=='""' || $column.getInitValue()=="''" || $column.getInitValue().toLowerCase()=="empty")))${column.getInitValue()}#end") #end
+#if($column.isVariableArraySize())
+	@ArraySize(variable=true) #end
+#if(!$StringUtil.isEmptyOrNull($column.getArrayCount()))
+	@ArraySize($column.getArrayCount()) #end
+#if($column.isNotNull())
+	@NotNull #end
+#if($column.isValid())
+	@Valid #end
+#if(!$StringUtil.isEmptyOrNull($column.getValidations() ))
+	$column.getValidations() #end  
+#if(!$StringUtil.isEmptyOrNull($column.getNotNullMessage()))(message="$column.getNotNullMessage()") #end
+#if($column.getDataTypeQN() == "java.sql.Timestamp")@DateTimeFormat(pattern="yyyyMMddHHmmss")#end
+#if($column.getDataTypeQN() == "java.sql.Date")@DateTimeFormat(pattern="yyyyMMdd")#end
+## declare fields and set initial value
+
+#if($column.getDataTypeQN() == "java.util.ArrayList" || $column.getDataTypeQN() == "java.util.List")
+	private List#generic($column.getRefClassOnlyClassName()) $column.getAttributeLower();
+#else
+	private $column.getDataType() $column.getAttributeLower();
+#end
+#end##end of field declaration loop
+#set($index = 0)
+#foreach($column in $tableColumn)
+#if(!$StringUtil.isEmptyOrNull($column.getKorName()))
+	/**
+	 * $column.getKorName() Getter Method
+	 *
+	 * @return $column.getKorName()
+	 */
+	@LocalName("${column.getKorName()} Getter Method")
+#end
+#if($column.getDataTypeQN() == "java.util.ArrayList" || $column.getDataTypeQN() == "java.util.List")
+	public List#generic($column.getRefClassOnlyClassName()) get$column.getAttributeUpper()() {
+#elseif($column.getDataType() == "boolean")
+	public $column.getDataType()#if($StringUtil.isEmptyOrNull($booleanGetterPrefix)) get#else ${booleanGetterPrefix}#end$column.getAttributeUpper()() {
+#else
+	public $column.getDataType() get$column.getAttributeUpper()() {
+#end
+#if($column.getDataType() == "int")
+		this.$column.getAttributeLower() = (Integer)super.getValue(#getKey($index $column));
+#elseif($column.getDataType() == "double")
+		this.$column.getAttributeLower() = (Double)super.getValue(#getKey($index $column));
+#elseif($column.getDataType() == "float")
+		this.$column.getAttributeLower() = (Float)super.getValue(#getKey($index $column));
+#elseif($column.getDataType() == "long")
+		this.$column.getAttributeLower() = (Long)super.getValue(#getKey($index $column));
+#elseif($column.getDataType() == "short")
+		this.$column.getAttributeLower() = (Short)super.getValue(#getKey($index $column));
+#else
+		this.$column.getAttributeLower() = super.getValue(#getKey($index $column));
+#end
+		return this.$column.getAttributeLower();
+	}
+
+#if(!$StringUtil.isEmptyOrNull($column.getKorName()))
+	/**
+	 * $column.getKorName() Setter Method
+	 * 
+	 * @param $column.getDataType() $column.getKorName()
+	 */
+	@LocalName("${column.getKorName()} Setter Method")
+#end
+#if($column.getDataTypeQN() == "java.util.ArrayList" || $column.getDataTypeQN() == "java.util.List")
+	public void set$column.getAttributeUpper()(List#generic($column.getRefClassOnlyClassName()) $column.getAttributeLower()) {
+	    super.setValue(#getKey($index $column), $column.getAttributeLower());
+		this.$column.getAttributeLower() = $column.getAttributeLower();
+#else
+	public void set$column.getAttributeUpper()($column.getDataType() $column.getAttributeLower()) {
+		super.setValue(#getKey($index $column), $column.getAttributeLower());
+		this.$column.getAttributeLower() = $column.getAttributeLower();
+#end
+	}
+	
+#set($index = $index + 1)
+#end
+}

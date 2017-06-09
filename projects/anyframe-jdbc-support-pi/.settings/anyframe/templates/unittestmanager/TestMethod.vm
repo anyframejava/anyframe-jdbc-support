@@ -1,0 +1,39 @@
+
+#if ($rollbackForMethod == "true")
+	@Rollback(true)
+#end
+	@Test
+	public void ${testMethod}_${signatureName}_${sequenceNumber} () throws Exception{
+
+#if (${testCode})
+	// ***** INPUT PARAMETER SETTING
+${testCode}
+#end
+	// ***** SERVICE EXECUTE
+#if ($executePreProcessor == "true")
+		executePreProcessor();
+#end
+#if (${outputName} != "void")
+		${outputName} ${outVO} = serviceInstance.${methodName}(${inputParamNames});
+		assertNotNull(${outVO});
+##		print(${outVO});
+#if (${outputName} == "List")
+		for(int i=0;i<${outVO}.size();i++){
+			System.out.println(ToStringBuilder.reflectionToString(${outVO}.get(i), ToStringStyle.MULTI_LINE_STYLE));
+		}
+#else
+		System.out.println(ToStringBuilder.reflectionToString(${outVO}, ToStringStyle.MULTI_LINE_STYLE));
+#end
+
+#if (${testAssertCode})
+
+	// ***** RESULT VALUE VALIDATION
+${testAssertCode}
+#end
+#else
+		serviceInstance.${methodName}(${inputParamNames});
+#end
+#if ($executePostProcessor == "true")
+		executePostProcessor();
+#end
+	}

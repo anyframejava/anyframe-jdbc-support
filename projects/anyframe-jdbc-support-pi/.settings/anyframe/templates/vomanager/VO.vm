@@ -1,0 +1,100 @@
+####################################################################
+##### Default VO Template for Anyframe Enterprise
+##### support @NotNull annotation with message property, 2011.06.28
+##### can use field name as key instead of field order index, 2011.07.13
+##### support @DefaultValue annotation, 2011.07.21
+##### consider reserved words for empty String(""), 2011.11.07
+##### support @ArraySize(variable==true), 2011.11.23
+##### support Use 'is' prefix for getters that return boolean, 2012.01.03
+####################################################################
+#set($useIndexAsKey = false)##true: numeric index / false: field name string
+#macro(generic $calssName)
+#if($StringUtil.isEmptyOrNull($calssName))#else<$calssName>#end
+#end
+#macro(getKey $indexNum $fieldItem)
+#if($useIndexAsKey)$indexNum#else"$fieldItem.getAttributeLower()"#end
+#end##end of getKey
+#macro( appenddesc $desc $indentStr)
+#set($lineList = [])
+#set($lineList = $desc.split("\r\n"))
+#foreach($line in $lineList)
+${indentStr}* ${line}
+#end
+#end##end of appenddesc
+#set($Integer = 0)
+#if(${packageText} != "")
+package ${packageText};
+#end
+
+#foreach($importStatement in $importStatements)
+import ${importStatement};
+#end
+
+/**
+#if(!$StringUtil.isEmptyOrNull(${voClassNameKo}))
+ * @name_ko ${voClassNameKo}
+#end
+#if(!$StringUtil.isEmptyOrNull(${voDescription}))
+ * @desc ${voDescription}
+#end
+## * @stereotype $type
+ * @author $!author
+ * @voType
+ */
+public class ${voClassName}{
+
+#foreach($column in $tableColumn)
+#if(!$StringUtil.isEmptyOrNull($column.getDescription()))
+    /**
+#end
+#if(!$StringUtil.isEmptyOrNull($column.getDescription()))
+     * $column.getDescription()
+#end
+#if(!$StringUtil.isEmptyOrNull($column.getDescription()))
+     */
+#end
+
+#if($column.getDataTypeQN() == "java.util.ArrayList" || $column.getDataTypeQN() == "java.util.List")
+	private List#generic($column.getRefClassOnlyClassName()) $column.getAttributeLower();
+#else
+	private $column.getDataType() $column.getAttributeLower();
+#end
+#end##end of field declaration loop
+#set($index = 0)
+#foreach($column in $tableColumn)
+#if(!$StringUtil.isEmptyOrNull($column.getKorName()))
+	/**
+	 * $column.getKorName() Getter Method
+	 *
+	 * @return $column.getKorName()
+	 */
+#end
+#if($column.getDataTypeQN() == "java.util.ArrayList" || $column.getDataTypeQN() == "java.util.List")
+	public List#generic($column.getRefClassOnlyClassName()) get$column.getAttributeUpper()() {
+#elseif($column.getDataType() == "boolean")
+	public $column.getDataType()#if($StringUtil.isEmptyOrNull($booleanGetterPrefix)) get#else ${booleanGetterPrefix}#end$column.getAttributeUpper()() {
+#else
+	public $column.getDataType() get$column.getAttributeUpper()() {
+#end
+		return this.$column.getAttributeLower();
+	}
+
+#if(!$StringUtil.isEmptyOrNull($column.getKorName()))
+	/**
+	 * $column.getKorName() Setter Method
+	 * 
+	 * @param $column.getDataType() $column.getKorName()
+	 */
+#end
+#if($column.getDataTypeQN() == "java.util.ArrayList" || $column.getDataTypeQN() == "java.util.List")
+	public void set$column.getAttributeUpper()(List#generic($column.getRefClassOnlyClassName()) $column.getAttributeLower()) {
+		this.$column.getAttributeLower() = $column.getAttributeLower();
+#else
+	public void set$column.getAttributeUpper()($column.getDataType() $column.getAttributeLower()) {
+		this.$column.getAttributeLower() = $column.getAttributeLower();
+#end
+	}
+	
+#set($index = $index + 1)
+#end
+}

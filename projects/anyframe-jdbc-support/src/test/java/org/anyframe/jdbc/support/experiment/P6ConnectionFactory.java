@@ -58,83 +58,42 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-package org.anyframe.jdbc.support.p6spy;
+package org.anyframe.jdbc.support.experiment;
 
-import java.sql.ResultSet;
+import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-import org.anyframe.jdbc.support.CompleteQueryPostProcessor;
-import org.anyframe.jdbc.support.InjectionPatternPostProcessor;
+import org.anyframe.jdbc.support.experiment.factory.ConnectionHandlerFactory;
 
-import com.p6spy.engine.spy.P6Connection;
-import com.p6spy.engine.spy.P6CoreFactory;
-import com.p6spy.engine.spy.P6Statement;
+import com.p6spy.engine.proxy.ProxyFactory;
+import com.p6spy.engine.spy.P6Factory;
+import com.p6spy.engine.spy.P6LoadableOptions;
+import com.p6spy.engine.spy.option.P6OptionsRepository;
 
 /**
- * P6Spy Statement Extension for jdbc support functions (InjectionPattern,
- * CompleteQuery)
+ * P6Spy Connection Factory Extension for jdbc support functions (CompleteQuery)
  *
  * @author Changje Kim
  * @author Byunghun Woo
  *
  */
-public class P6ILStatement extends P6Statement { 
+public class P6ConnectionFactory implements P6Factory {
 
-	private final InjectionPatternPostProcessor injectionPatternPostProcessor;
-
-	private final CompleteQueryPostProcessor completeQueryPostProcessor;
-
-	public P6ILStatement(P6CoreFactory factory, Statement statement, P6Connection conn,
-			InjectionPatternPostProcessor injectionPatternPostProcessor,
-			CompleteQueryPostProcessor completeQueryPostProcessor) {
-		super(factory, statement, conn);
-		this.injectionPatternPostProcessor = injectionPatternPostProcessor;
-		this.completeQueryPostProcessor = completeQueryPostProcessor;
+	private ConnectionHandlerFactory connectionHandlerFactory;
+	
+	public P6ConnectionFactory(ConnectionHandlerFactory connFactory){
+		connectionHandlerFactory = connFactory;
+	}
+	
+	@Override
+	public Connection getConnection(Connection conn) throws SQLException {
+		return ProxyFactory.createProxy(conn, connectionHandlerFactory.createConnectionHandler(conn));
 	}
 
 	@Override
-	public boolean execute(String sql) throws SQLException {
-		injectionPatternPostProcessor.warningPattern(sql);
-		statementQuery = injectionPatternPostProcessor.replacePattern(sql);
-		completeQueryPostProcessor.processCompleteQuery(statementQuery);
-
-		return passthru.execute(statementQuery);
+	public P6LoadableOptions getOptions(P6OptionsRepository optionsRepository) {
+		// DataSource를 P6Spy로 Wrapping해서 사용할 때 필요한 메소드
+		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public ResultSet executeQuery(String sql) throws SQLException {
-		injectionPatternPostProcessor.warningPattern(sql);
-		statementQuery = injectionPatternPostProcessor.replacePattern(sql);
-		completeQueryPostProcessor.processCompleteQuery(statementQuery);
-
-		return getP6Factory().getResultSet(passthru.executeQuery(statementQuery), this, "", statementQuery);
-	}
-
-	@Override
-	public int executeUpdate(String sql) throws SQLException {
-		injectionPatternPostProcessor.warningPattern(sql);
-		statementQuery = injectionPatternPostProcessor.replacePattern(sql);
-		completeQueryPostProcessor.processCompleteQuery(statementQuery);
-
-		return (passthru.executeUpdate(sql));
-	}
-
-	@Override
-	public void addBatch(String sql) throws SQLException {
-		injectionPatternPostProcessor.warningPattern(sql);
-		statementQuery = injectionPatternPostProcessor.replacePattern(sql);
-		completeQueryPostProcessor.processCompleteQuery(statementQuery);
-
-		passthru.addBatch(statementQuery);
-	}
-
-	@Override
-	public int[] executeBatch() throws SQLException {
-		injectionPatternPostProcessor.warningPattern(statementQuery);
-		statementQuery = injectionPatternPostProcessor.replacePattern(statementQuery);
-		completeQueryPostProcessor.processCompleteQuery(statementQuery);
-
-		return (passthru.executeBatch());
-	}
 }

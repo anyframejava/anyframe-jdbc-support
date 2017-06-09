@@ -1,0 +1,68 @@
+####################################################################
+##### Default DAO Template for Anyframe Enterprise
+####################################################################
+#set($type = $method.type)
+#set($sqlMapId = ${method.sqlId})
+
+#macro( inputParameter $inputType)## start of inputParameter
+#if($inputType=="Map"), inputMap#elseif($inputType=="VO"), inputVO#elseif($inputType=="List"), inputList#end
+#end## end of inputParameter
+
+### end of macro ##
+
+	/**
+#foreach($eachline in ${method.descriptionLines})
+     * $eachline
+#end
+     * 
+#if(!$util.isEmpty(${method.localName}))
+     * @method name(ko) : ${method.localName}
+#end
+	 * @dmlType ${method.type}
+#foreach($parameter in ${method.parametres})
+	 * @param ${parameter.name}
+#end
+#if(${method.editorType})
+	 * @editorType ${method.editorType}
+#end
+	 * @return
+	 */
+#if($type == "select")
+	public ${method.returnType} ${method.name}(${method.parameter.declaration}) {
+		return super.findByPk("$sqlMapId"#inputParameter(${method.inputType}));
+	}
+#end
+#if($type == "list")
+	public ${method.returnType} ${method.name}(${method.parameter.declaration} ) {
+		return super.findList("$sqlMapId"#inputParameter(${method.inputType}));
+	}
+#end
+#if($type == "insert")
+	public ${method.returnType} ${method.name}(${method.parameter.declaration}) {
+		return super.create("$sqlMapId"#inputParameter(${method.inputType}));
+	}
+#end
+#if($type == "update")
+	public ${method.returnType} ${method.name}(${method.parameter.declaration}) {
+		return super.update("$sqlMapId"#inputParameter(${method.inputType}));
+	}
+#end
+#if($type == "delete")
+	public ${method.returnType} ${method.name}(${method.parameter.declaration}) {
+		return super.remove("$sqlMapId"#inputParameter(${method.inputType}));
+	}
+#end
+#if($type == "executeBatch")
+	public int[] ${method.name}(final List<${method.parameter.generic}> #inputParameter(${method.inputType})) {
+		return super.batchUpdate("$sqlMapId"#inputParameter(${method.inputType}));
+	}
+#end
+#if($type == "paging")
+	public Page ${method.name}(${method.parameter.declaration} , int pageIndex) {
+		return super.findListWithPaging("$sqlMapId"#inputParameter(${method.inputType}), ${method.parameter.declaration}
+		, pageIndex, pageSize, pageUnit);
+	}
+#end
+
+
+

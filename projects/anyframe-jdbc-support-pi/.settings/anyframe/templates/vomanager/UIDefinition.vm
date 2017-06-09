@@ -1,0 +1,61 @@
+##### VO To XPlatform Column Definition
+##### for IMK project
+##### written by bonobono, 20110217
+#macro(upperFirstString $name)
+$name.substring(0,1).toUpperCase()$name.substring(1,$name.length())##
+#end##end of macro removeVoSuffix
+#macro(removeVoSuffix $voName)
+#if($voName.endsWith("DVO") || $voName.endsWith("SVO") || $voName.endsWith("BVO"))#set( $voNameLength = $voName.length() - 3)$voName.substring(0,$voNameLength)#else$voName#end
+#end##end of macro removeVoSuffix
+#macro(getSize $length)
+#if(!$length || $length == '')256#else$length#end
+#end##end of macro getSize
+
+#macro(getSumtext $desc)
+#if(!$desc || $desc == '')
+##Do nothing
+#elseif($desc && $desc != '')sumtext="$desc"#end
+#end##end of macro getSumtext
+#macro(getSingleColumnDefinition $ied)
+## ied : Field 
+#if($ied.type == "java.lang.String")
+        <Column id="$ied.name" type="STRING" size="#getSize($ied.length)" #getSumtext($ied.description)/>
+#elseif($ied.type == "java.math.BigDecimal")
+        <Column id="$ied.name" type="BIGDECIMAL" size="#getSize($ied.length)" #getSumtext($ied.description)/>
+#elseif($ied.type == "java.math.BigInteger" || $ied.type == "int")
+        <Column id="$ied.name" type="INT" size="#getSize($ied.length)" #getSumtext($ied.description)/>
+#elseif($ied.type == "java.sql.Date" || $ied.type == "java.sql.Timestamp")
+        <Column id="$ied.name" type="DATE" size="#getSize($ied.length)" #getSumtext($ied.description)/>
+#end##end of if type
+#end##end of macro getSingleColumnDefinition
+
+
+#set($processedList = [])
+#foreach($ied in $list)
+#if($ied.refClass && $ied.refClass != '' && ($ied.name.contains("Inserted") == false) && ($ied.name.contains("Updated") == false) && ($ied.name.contains("Deleted") == false))
+#set($temp = $processedList.add($StringUtil.unqualifyJavaName(${ied.refClass})))
+
+<UxFormClipBoard>
+<Dataset id="ds#upperFirstString($ied.name)" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+	<ColumnInfo>		
+#set($childList = ${ied.getChildren()})
+#foreach($ied in $childList)
+#getSingleColumnDefinition($ied)
+#end##end of foreach field of children
+	</ColumnInfo>
+</Dataset>
+</UxFormClipBoard>
+#end##end of if has children and not yet processed
+#end##end of foreach
+
+<UxFormClipBoard>
+<Dataset id="ds#removeVoSuffix(${voClassName})" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+	<ColumnInfo>		
+#foreach($ied in $list)
+#if($ied.name != "pageIndex" && $ied.name != "pageSize")
+#getSingleColumnDefinition($ied)
+#end
+#end##end of foreach
+	</ColumnInfo>
+</Dataset>
+</UxFormClipBoard>

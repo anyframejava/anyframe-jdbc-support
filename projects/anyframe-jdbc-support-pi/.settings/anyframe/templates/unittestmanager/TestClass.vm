@@ -1,0 +1,48 @@
+#if (${packageText} != "")
+package ${packageText};
+#end
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+#if (($useClassLoader != "true") && (!$StringUtil.isEmptyOrNull($interfaceNameQN)))
+import org.springframework.beans.factory.annotation.Qualifier;
+#end
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.annotation.Rollback;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+import static org.junit.Assert.*;
+
+/**
+ * Copyright(c) 2011 Samsung SDS Co., Ltd. All rights reserved.
+ * Generated Test Code : ${testClass}
+ * Works with JUnit4.4 
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath*:/spring/context-*.xml" })
+#if ($rollbackForClass == "true")
+@TransactionConfiguration (transactionManager="$springTransactionManager", defaultRollback=true)
+#else
+@TransactionConfiguration (transactionManager="$springTransactionManager", defaultRollback=false)
+#end
+@Transactional
+public class ${testClass} {	
+
+#if ($useClassLoader == "true")
+	private ${className} serviceInstance = new ${className}();
+#else
+	@Autowired
+#if ($StringUtil.isEmptyOrNull($interfaceNameQN))
+	private ${className} serviceInstance;
+#else
+	@Qualifier("#if($StringUtil.isEmptyOrNull($beanName))$StringUtil.toLowerFirstLetter($className)#else${beanName}#end")
+	private $StringUtil.unqualifyJavaName(${interfaceNameQN}) serviceInstance;
+#end
+#end
+
+${methodString}
+}

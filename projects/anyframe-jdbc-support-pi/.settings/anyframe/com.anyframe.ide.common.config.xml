@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SiteProvider>
+	<typeProvider>
+		<property name="nameToQualifiedTypeName" type="map">
+		<!-- fieldType 을 정의한다. 필드타입명과 실제클래스명의 쌍으로 정의한다.  -->
+			<map>
+				<entry key="String">java.lang.String</entry>
+				<entry key="int">int</entry>
+				<!-- <entry key="BigDecimal">java.math.BigDecimal</entry>
+				<entry key="BigInteger">java.math.BigInteger</entry>
+				<entry key="List">java.util.List</entry>
+				<entry key="Date">java.sql.Date</entry>
+				<entry key="Timestamp">java.sql.Timestamp</entry> -->
+			</map>
+		</property>
+		<property name="matchedTypes" type="map">
+		<!-- DB 타입과 자바클래스를 쌍으로 정의한다. -->
+			<map>
+				<entry key="VARCHAR">java.lang.String</entry>
+				<entry key="VARCHAR2">java.lang.String</entry>
+				<entry key="NUMBER">java.math.BigDecimal</entry>
+				<!--entry key="NUMBER,10">int</entry-->
+				<entry key="BIGINT">java.math.BigDecimal</entry>
+				<entry key="DECIMAL">java.math.BigDecimal</entry>
+				<entry key="FLOAT">java.math.BigDecimal</entry>
+				<entry key="DOUBLE">java.math.BigDecimal</entry>
+				<entry key="DATE">java.sql.Date</entry>
+				<entry key="TIMESTAMP">java.sql.Timestamp</entry>
+				<entry key="NUMERIC">java.math.BigDecimal</entry>
+				<entry key="DATETIME">java.sql.Timestamp</entry>
+				<entry key="INTEGER">java.math.BigDecimal</entry>
+				<entry key="SMALLINT">java.math.BigDecimal</entry>
+				<entry key="CLOB">java.lang.String</entry>
+				<entry key="BLOB">byte[]</entry>
+			</map>
+		</property>
+		<!-- DB 타입에 대한 고정 길이를 정의한다. (삼성생명에서 사용)-->
+<!-- 
+		<property name="MatchedTypeLengthes" type="map">
+			<map>
+				<entry key="TIMESTAMP">26</entry>
+			</map>
+		</property>
+ -->
+		<property name="JavaTypeToDbTypeMap" type="map">
+		<!-- 자바클래스과 DB 타입의 쌍으로 정의한다. -->
+			<map>
+				<entry key="java.lang.String">VARCHAR</entry>
+				<entry key="int">NUMBER</entry>
+				<entry key="java.math.BigDecimal">NUMBER</entry>
+				<entry key="java.math.BigInteger">NUMBER</entry>
+				<entry key="java.sql.Date">DATE</entry>
+				<entry key="java.sql.Timestamp">TIMESTAMP</entry>
+			</map>
+		</property>
+		
+		<property name="SupportedTypes" type="list">
+		<!-- Supported Type 목록으로  VOEditor 와 DaoManager 에서 사용 
+			 VOEditor 의 변수 타입설정에 지원되는 타입들을 정의함. 
+			 - TypeName : 화면에 출력되는 타입명 
+			 - qualifiedName : 실제 적용되는 클래스명
+			 - refClass : 객체 타입의 Reference 설정 필요 여부로  List, Object 타입등에 해당한다. 
+		  -->
+			<list>
+				<item type="SupportedType">
+					<property name="typeName">String</property>
+					<property name="qualifiedName">java.lang.String</property>
+					<property name="refClass">false</property>
+				</item>
+				<item type="SupportedType">
+					<property name="typeName">int</property>
+					<property name="qualifiedName">int</property>
+					<property name="refClass">false</property>
+				</item>
+				<item type="SupportedType">
+					<property name="typeName">double</property>
+					<property name="qualifiedName">double</property>
+					<property name="refClass">false</property>
+				</item>
+				<item type="SupportedType">
+					<property name="typeName">long</property>
+					<property name="qualifiedName">long</property>
+					<property name="refClass">false</property>
+				</item>
+				<item type="SupportedType">
+					<property name="typeName">BigDecimal</property>
+					<property name="qualifiedName">java.math.BigDecimal</property>
+					<property name="refClass">false</property>
+				</item>
+				<item type="SupportedType">
+					<property name="typeName">BigInteger</property>
+					<property name="qualifiedName">java.math.BigInteger</property>
+					<property name="refClass">false</property>
+				</item>
+				<item type="SupportedType">
+					<property name="typeName">List</property>
+					<property name="qualifiedName">java.util.List</property>
+					<property name="refClass">true</property>
+				</item>
+				<item type="SupportedType">
+					<property name="typeName">boolean</property>
+					<property name="qualifiedName">boolean</property>
+					<property name="refClass">false</property>
+				</item>
+				<item type="SupportedType">
+					<property name="typeName">Date(SQL)</property>
+					<property name="qualifiedName">java.sql.Date</property>
+					<property name="refClass">false</property>
+				</item>
+				<item type="SupportedType">
+					<property name="typeName">Timestamp(SQL)</property>
+					<property name="qualifiedName">java.sql.Timestamp</property>
+					<property name="refClass">false</property>
+				</item>
+				<item type="SupportedType">
+					<property name="typeName">VO</property>
+					<property name="qualifiedName">VO</property>
+					<property name="refClass">true</property>
+				</item>
+				<item type="SupportedType">
+					<property name="typeName">ARRAY</property>
+					<property name="qualifiedName">ARRAY</property>
+					<property name="refClass">true</property>
+				</item>
+			</list>
+		</property>
+		
+		<property name="SupportedPrimitiveArrayElementTypes" type="list">
+		<!--  -->
+			<list>
+				<item type="SupportedType">
+					<property name="typeName">byte</property>
+					<property name="qualifiedName">byte</property>
+					<property name="refClass">false</property>
+				</item>
+			</list>
+		</property>
+		
+		<property name="ClassTypes" type="list">
+		<!-- 클래스의 타입과 코드명, 카테고리 명을 정의한다.
+		     - stereoTypeName : 타입명
+		     - stereoTypeCode : 타입코드
+		     - category : 카테고리명 (VO : VO)
+		-->
+			<list>
+				<item type="StereoType">
+					<property name="stereoTypeName">ALL</property>
+					<property name="stereoTypeCode">ALL</property>
+				</item>
+				<item type="StereoType">
+					<property name="stereoTypeName">VO</property>
+					<property name="stereoTypeCode">VO</property>
+					<property name="category">VO</property>
+				</item>
+				<item type="StereoType">
+					<property name="stereoTypeName">BATVO</property>
+					<property name="stereoTypeCode">BATVO</property>
+					<property name="category">VO</property>
+				</item>
+				<item type="StereoType">
+					<property name="stereoTypeName">Service</property>
+					<property name="stereoTypeCode">SC</property>
+				</item>
+				<item type="StereoType">
+					<property name="stereoTypeName">Business</property>
+					<property name="stereoTypeCode">BC</property>
+				</item>
+				<item type="StereoType">
+					<property name="stereoTypeName">DAOEM/QM</property>
+					<property name="stereoTypeCode">DAO</property>
+				</item>
+			</list>
+		</property>
+		
+		<property name="JdbcTableTypesForDialog" type="list">
+		<!-- 조회 가능한 특정 테이블 타입을 정의한다. -->
+			<list>
+				<item>TABLE</item>
+				<!--item>VIEW</item-->
+				<!--item>ALIAS</item-->
+				<!--item>SYNONYM</item-->
+				<!--item>ALL</item-->
+			</list>
+		</property>
+	</typeProvider>	
+	<policy>
+		<property name="useDataDictionary" type="boolean">false</property>
+		<!-- VO Editor, DAO Manager : Data Dictionary 기능 사용 여부 (default = true) -->
+	
+		<property name="checkDataDictionaryBeforeGenerate" type="boolean">false</property>
+		<!-- VO Editor : Generate 하기 전에 DataDictionary 와 용어 일치성을 검사할지 여부 (default = false) 
+		useDataDictionary=true 인 경우에만 용어 일치성 검사를 수행함.-->
+
+		<property name="checkDataDictionaryBeforeGenerateByList" type="boolean">false</property>
+		<!-- VO Editor : Generate, Revise Length or Original Length 버튼 클릭 후에 
+		DataDictionary 와 용어 일치성 검사 시에 List 로 한꺼번에 검사할지 여부 (default = false)
+		Revise Length, Original Length 버튼은 useFieldLengthRevision=true 이면 사용 가능함. -->
+
+		<property name="forceMessageGeneration" type="boolean">false</property>
+		<!-- VO Editor : NCRM 등 Message Generation을 강제화 여부 (default = false) -->
+
+		<property name="showDataDictionaryDialogWhenNotFoundMatchedWord" type="boolean">true</property>
+		<!-- VO Editor : Key입력에 의한 DD Search 결과가 없을 때 자동으로 DD Search Dialog를 띄워줄지 여부 (default = true) -->
+
+		<property name="prohibitCommitIfJavaErrorExist" type="boolean">true</property>
+		<!-- AnyTeam : Java Source에 Compile Error가 존재할 경우 사용자의 선택에 관계없이 Commit을 막을지 여부 (default = false) -->
+
+		<property name="useImportDatabase" type="boolean">true</property>
+		<!-- VO Editor : Import Database 기능 사용 여부 (default = true) -->
+
+		<property name="disableExportExcelButton" type="boolean">false</property>
+		<!-- VO Editor : Export Excel 버튼 비활성화 여부(default = false) -->
+
+		<property name="disableImportExcelButton" type="boolean">false</property>
+		<!-- VO Editor : Import Excel 버튼 비활성화 여부(default = false)-->
+
+		<property name="disableSaveAsButton" type="boolean">true</property>
+		<!-- VO Editor : Save As 버튼 비활성화 여부(default = true) -->
+
+		<property name="useMetaLite" type="boolean">false</property>
+		<!-- VO Editor : MetaLite 정보를 기반으로 Data Dictionary 사용, 서버 설정도 되어야함 (default = false) -->
+
+		<property name="ignoreMetaError" type="boolean">true</property>
+		<!-- Team Manager : Meta 저장 오류 발생해도 형상 등록에 지장 없게 -->
+
+		<property name="useArrayLength" type="boolean">false</property>
+		<!-- VO Editor : Array Length Column의 사용 여부 (default = false) -->
+
+		<property name="resetLengthAfterNewVOSelection" type="boolean">true</property>
+		<!-- VO Editor : VO Selection시에 Length 정보 초기화 여부 (default = true) -->
+
+		<property name="enableCreateFromExistingOne" type="boolean">false</property>
+		<!-- AnyUnit : Create From This 지원 여부 (default = false) -->
+
+		<property name="exportChildrenToExcel" type="boolean">false</property>
+		<!-- VO Editor : Excel Export시에 Children 표현 여부 (default = false) -->
+
+		<property name="useInnerClass" type="boolean">false</property>
+		<!-- VO Editor : Inner Class 옵션 사용 여부 (default = false) -->
+
+		<property name="disableLogin" type="boolean">true</property>
+		<!-- Splash : Login 기능 비활성화 여부 (default = true) -->
+
+		<property name="useFieldPositionCalculation" type="boolean">false</property>
+		<!-- VO Manager : startPos, endPos 컬럼 사용 여부(length와 order 계산) (default = false) -->
+		<!-- 이 옵션을 활성화하면 Ref 클래스의 Length 를 계산하여 Length 컬럼에 반영하여 준다. -->
+
+		<property name="useFieldScale" type="boolean">false</property>
+		<!-- VO Editor : scale 컬럼 사용 여부 (default = false) -->
+
+		<property name="useLength" type="boolean">false</property>
+		<!-- VO Editor : length 컬럼 사용 여부 (default = true) -->
+		
+		<property name="voSuperClass" type="String">com.anyframe.online.core.vo.AbstractVo</property>
+		<!-- VO Editor : voClass 의 superClass 지정-->
+
+		<property name="useCommonData" type="boolean">false</property>
+		<!-- AnyUnit : CommonData 지원 여부 (default = true) -->
+
+		<property name="usePrePostProcessor" type="boolean">false</property>
+		<!-- AnyUnit : Pre/Post Processor 지원 여부 (default = true) -->
+
+		<property name="useMapConversionUtil" type="boolean">true</property>
+		<!-- AnyUnit : VO의 toMap, fromMap 대신 자체 Map conversion util 을 사용할지 여부 (default = false) -->
+
+		<property name="persistenceType" type="String">JDBC_TEMPLATE</property>
+		<!-- DAO Manager : persistence layer 타입 종류 설정 (default = JDBC_TEMPLATE)
+		             예) JDBC_TEMPLATE, IBATIS2, QUERY_SERVICE, MYBATIS-->
+
+		<property name="useBindValuePrefixInQueryService" type="boolean">true</property>
+		<!-- DAO Manager : QueryService 사용시 바인드 변수에 prefix 사용여부 (default = true)
+				true -  :vo.value
+				false - :value
+		 -->		             
+
+		<property name="enableOnlyRealPrimitiveArray" type="boolean">true</property>
+		<!-- VO Editor : 오직 real primitive type을 element로 가지는 Array 만 지원 여부 (default = false) -->
+
+		<property name="useFieldRowNumberCalculation" type="boolean">false</property>
+		<!-- VO Manager : field row 에 line number  표시 여부 (default = false) -->
+		
+		<property name="useFieldLengthRevision" type="boolean">false</property>
+		<!-- VO Manager : length/scale 정보 메타 연계를 통한 보정 기능 사용 여부 (default = false) -->
+
+		<property name="importVoClassInfoFromExcel" type="boolean">false</property>
+		<!-- DAO Manager : Excel Import시에 VO Class의 정보도 불러올지 여부 (default = false) -->
+
+		<property name="useDVOFieldLengthAndScale" type="boolean">false</property>
+		<!-- DAO Manager : length/scale 정보 사용할 건지 여부 (default = false) 
+		EM, QM 에서 (re)make, excute 시에 length, scale 정보를 컬럼에 나타내고 활용한다.-->
+
+		<property name="disableDaoMethodVoSelection" type="boolean">false</property>
+		<!-- DAO Manager : method별 VO 지정 기능 Off 여부 (default = false)
+		             현재는 QM 에만 해당 -->
+
+		<property name="enableMakeUiDefinitionButton" type="boolean">false</property>
+		<!-- VO Editor : UI Definition 버튼 활성화 여부 (default = false)
+		             개발된 VO 를 MIPlatform 과 같은 UI 의 솔루션에 Mapping 되는 XML 등의 형식으로 자동 생성해주는 기능 사용 여부 -->
+
+		<property name="enableMakeJavaDefinitionButton" type="boolean">false</property>
+		<!-- VO Editor : Java Definition 버튼 활성화 여부 (default = false)
+		             개발된 VO 를 기반으로 하여 샘플 Java 코드를 생성해주는 기능 사용 여부 -->
+
+		<property name="ignoreNumericSuffix" type="boolean">false</property>
+		<!-- VO Editor : Data Dictionary 검사할 때 field 명에 붙는 숫자형 표시는 무시하고 검사할지 여부 (default : false) -->
+
+		<property name="sqlFont" type="String"></property>
+		<!-- DAO Manager : SQL Query 작성창에서 사용할 폰트를 설정(고정폭 글씨체로 바꾸고 싶을 때 사용) (default : OS 이 시스템 폰트) -->
+
+		<property name="useNotNull" type="boolean">false</property>
+		<!-- VO Editor : NotNull Annotation 사용 여부 (default : false) -->
+		
+		<property name="useValidationEditor" type="boolean">false</property>
+		<!-- VO Editor : Vo Editor 상에서 Validation을 입력하는 기능 사용여부(default : false) 
+			true 일 경우 useNotNull 은 false로 해야 한다. 	-->
+
+		<property name="suggestQualifiedNameForDefaultBeanName" type="boolean">false</property>
+		<!-- AnyUnit : default bean name 을 Qualified name으로 제공할지 여부 (default : false) -->
+
+		<property name="useVariableArraySize" type="boolean">false</property>
+	<!-- VO Editor : 가변 길이 Array Size 사용 유무(default : false) Runtime4 VO 템플릿에서 
+		@ArraySize(variable=true) 어노테이션을 추가해줌. <property name="useVariableArraySize" 
+		type="boolean">true</property> 위와 같이 설정하면 가변길이 사용 기능이 활성화 되며, 실제로 하는 역할은 
+		VOEditor 에 column 에 Variable Array Size 이 활성화되고(체크박스) List 타입으로 DVO 클래스를 
+		Ref 하고 있을 경우에 체크박스에 체크하면 VO Generation 할 때 VO 소스의 해당 field 에 Annotation 으로 
+		@ArraySize(variable=true) 위와 같이 설정해줍니다. 이후 처리는 런타임에서 하게 됩니다. -->
+		
+		<property name="supportDbSchema" type="boolean">false</property>
+		<!-- DB Explorer & DAO Manager : DB Object 조회시 Schema 사용 , 현재로선 EM에서 Query에 Schema 명시가 유일한 차이점  -->
+		
+		<property name="getterPrefixType" type="String">GET</property>
+		<!-- VO Editor : boolean을 return하는 getter 메소드의 prefix 설정 (default : GET)
+		             예) GET, IS, DEFAULT(eclipse설정에 따름)-->
+
+		<!-- property name="fillEmDefaultValue" type="boolean">false</property-->
+		<!-- ppsn(국세청) 사용중
+			ppsn 은 DATA 타입에 대해서만 사용하고 있고 Default 설정을 따르고 있다.
+			사용하려는 프로젝트가 있다면 XML 설정에서 policy fillEmDefaultValue=true 설정 후에
+			typeProvider FillEmDefaultValueTypes 를 List 로 정의하여야 한다.
+			예시는 템플릿 anyframe-runtime4 폴더의 XML 설정의 FillEmDefaultValueTypes 참고. -->
+
+		<!-- property name="useNumberTypeAsInt" type="boolean">false</property-->
+		<!-- DB COLUMN TYPE 이 NUMBER 인 경우에 LENGTH 를 체크하여 int 로도 사용할 것인지 여부 (default : false)
+			(length=0 이면 비교안함, scale=null 이면 scale=0 인 것으로 간주)
+			XML Configuration typeProvider 노드의 matchedTypes 항목에 
+			<entry key="NUMBER">java.math.BigDecimal</entry>	설정 해주는 것 이외에
+			<entry key="NUMBER,10">int</entry>	와 같은 내용이 추가되어야 함. (ex length 가 10 미만인 경우에 int 를 사용)-->
+		
+		<!-- property name="useXmlTransient" type="boolean">false</property-->
+		<!-- VOEditor :  특정 필드에 checkbox 표시하여 해당 VO 를 이용한 xsd 파일을 생성할때 schema 를 생성할 필드를 정의한다. 
+			 해당 기능을 사용하면 VOEditor 에서 XmlTransient checkbox 열이 나타나고 "체크 or not" 할 수 있다 이 정보를 이용해 vm 템플릇을 통해
+			 소스를 생성할때 XmlTransient annotation 을 달아줄 수 있다.-->
+
+		<property name="commitWithoutMeta" type="boolean">true</property>
+		<!-- MetaTeam, Subclipse : 커밋시에 AppMeta 등을 통해 커밋 정보에 대한 메타정보를 이용해 커밋여부, 메타데이터 저장등을 관리할지 여부(default = false) -->
+		
+		<property name="useMetaWizard" type="boolean">false</property>
+		<!-- DAO Manager : Meta Wizard 사용여부 -->
+		
+		<property name="useSyntaxValidator" type="boolean">false</property>
+		<!-- DAO Manager : SQL 문 작성시 TestSyntax 버튼 생성 및 체크 여부 -->
+		
+		<property name="useMetaInfoValidator" type="boolean">false</property>
+		<!-- DAO Manager : SQL 문 작성시 TestSyntax 버튼 생성 및 DB Table 및 Column 정보와의 매칭 검증 여부 
+									useSyntaxValidator 와 useMetaInfoValidator 둘중에 하나만 true 일지라도 TestSyntax 버튼은 활성화 된다.
+									둘다 true 일 경우, TestSyntax 버튼을 통해 두가지가 모두 테스트 된다.
+		-->
+		
+		<property name="useTestQuery" type="boolean">true</property>
+		<!-- DAO Manager : SQL 문 작성시 테스트쿼리 사용여부 -->
+		
+		<property name="useMustSuccessTestSyntax" type="boolean">false</property>
+		<!-- DAO Manager : SQL 문 저장시 Syntax 테스트 성공을 의무화 할지 여부. 단, 위 useSyntaxValidator가 false 인 경우 이 설정은 무의미하며 의무화되지 않는다. -->
+		
+		<!-- <property name="useMustSuccessMetaInfoValidator" type="boolean">true</property>
+		 DAO Manager : SQL 문 작성시 DB Table 및 Column 정보와의 검증 성공을 의무화 할지 여부. 단, 위 useMetaInfoValidator가 false 인 경우 이 설정은 무의미하며 의무화되지 않는다. -->
+		 
+		<property name="useMustSuccessTestQuery" type="boolean">true</property>
+		<!-- DAO Manager : SQL 문 작성시 TestQuery(테스트값 검증) 성공을 의무화할지 여부. 단, 위 useTestQuery가 false 인 경우 이 설정은 무의미하며 의무화되지 않는다. -->
+		
+		<property name="sqlFont" type="String"></property>
+		
+		<property name="daoSuperClass" type="String">com.anyframe.online.runtime.jdbc.AbstractJdbcDaoSupport</property>
+		
+		<property name="generateDVOClass" type="boolean">true</property>
+		<!-- DAO Manager : DAO Manager에서 소스 생성시 DVO 생성 여부  (default:true)-->
+
+		<property name="useSqlIdDelimiterHyphen" type="boolean">true</property>
+		<!-- DAO Manager : DAO Manager에서 sqlId 생성시 패키지간 구분을 하는 Delimiter를 hyphen으로 사용여부 (default:true)
+			false 일 경우는 패키지명에 사용되는 .을 그대로 사용한다.
+		-->
+
+		<!-- <property name="metaLiteUrl" type="String">http://70.121.244.12:8200/metalite-api</property> -->
+		<!-- DAO Manager :  -->
+		
+	</policy>
+
+
+ 
+	<property name="voTemplates" type="map">
+	<!-- VO Type별 Template 설정 -->
+		<map>
+			<entry key="VO">VO.vm</entry>
+		</map>
+	</property>
+
+	<daoMethodTypeInfo>
+		<daoMethodTypeList>
+			<daoMethodType>
+				<daoType>ALL</daoType>
+				<defaultGenerate>true</defaultGenerate>
+				<daoMethodTypeGroup>INSERT</daoMethodTypeGroup>
+				<name>insert</name>
+			</daoMethodType>
+			<daoMethodType>
+				<daoType>ALL</daoType>
+				<defaultGenerate>true</defaultGenerate>
+				<daoMethodTypeGroup>UPDATE</daoMethodTypeGroup>
+				<name>update</name>
+			</daoMethodType>
+			<daoMethodType>
+				<daoType>ALL</daoType>
+				<defaultGenerate>true</defaultGenerate>
+				<daoMethodTypeGroup>DELETE</daoMethodTypeGroup>
+				<name>delete</name>
+			</daoMethodType>
+			<daoMethodType>
+				<daoType>ALL</daoType>
+				<defaultGenerate>true</defaultGenerate>
+				<daoMethodTypeGroup>SELECT</daoMethodTypeGroup>
+				<name>select</name>
+			</daoMethodType>
+			<daoMethodType>
+				<daoType>ALL</daoType>
+				<defaultGenerate>true</defaultGenerate>
+				<daoMethodTypeGroup>SELECT</daoMethodTypeGroup>
+				<name>list</name>
+				<returnType>LIST</returnType>
+			</daoMethodType>
+			<daoMethodType>
+				<daoType>QM</daoType>
+				<defaultGenerate>false</defaultGenerate>
+				<daoMethodTypeGroup>UPDATE</daoMethodTypeGroup>
+				<name>executeBatch</name>
+			</daoMethodType>
+			<daoMethodType>
+				<daoType>ALL</daoType>
+				<defaultGenerate>false</defaultGenerate>
+				<daoMethodTypeGroup>SELECT</daoMethodTypeGroup>
+				<returnType>LIST</returnType>
+				<name>paging</name>
+			</daoMethodType>
+			
+			<daoMethodType>
+				<daoType>ALL</daoType>
+				<defaultGenerate>true</defaultGenerate>
+				<daoMethodTypeGroup>INSERT</daoMethodTypeGroup>
+				<name>insert</name>
+				<useMetaEditor>true</useMetaEditor>
+			</daoMethodType>
+			<daoMethodType>
+				<daoType>ALL</daoType>
+				<defaultGenerate>true</defaultGenerate>
+				<daoMethodTypeGroup>UPDATE</daoMethodTypeGroup>
+				<name>update</name>
+				<useMetaEditor>true</useMetaEditor>
+			</daoMethodType>
+			<daoMethodType>
+				<daoType>ALL</daoType>
+				<defaultGenerate>true</defaultGenerate>
+				<daoMethodTypeGroup>DELETE</daoMethodTypeGroup>
+				<name>delete</name>
+				<useMetaEditor>true</useMetaEditor>
+			</daoMethodType>
+			<daoMethodType>
+				<daoType>ALL</daoType>
+				<defaultGenerate>true</defaultGenerate>
+				<daoMethodTypeGroup>SELECT</daoMethodTypeGroup>
+				<name>select</name>
+				<useMetaEditor>true</useMetaEditor>
+			</daoMethodType>
+			<daoMethodType>
+				<daoType>ALL</daoType>
+				<defaultGenerate>true</defaultGenerate>
+				<daoMethodTypeGroup>SELECT</daoMethodTypeGroup>
+				<name>list</name>
+				<useMetaEditor>true</useMetaEditor>
+				<returnType>LIST</returnType>
+			</daoMethodType>
+			<daoMethodType>
+				<daoType>ALL</daoType>
+				<defaultGenerate>false</defaultGenerate>
+				<daoMethodTypeGroup>SELECT</daoMethodTypeGroup>
+				<returnType>LIST</returnType>
+				<name>paging</name>
+				<useMetaEditor>true</useMetaEditor>
+			</daoMethodType>
+		</daoMethodTypeList>
+	</daoMethodTypeInfo>
+</SiteProvider>

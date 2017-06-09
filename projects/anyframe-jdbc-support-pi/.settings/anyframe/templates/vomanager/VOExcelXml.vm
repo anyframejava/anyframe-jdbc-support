@@ -1,0 +1,263 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>$author</Author>
+  <LastAuthor>$author</LastAuthor>
+  <Created>2009-05-03T04:07:12Z</Created>
+  <LastSaved>2009-05-03T04:07:12Z</LastSaved>
+  <Company>삼성 SDS</Company>
+  <Version>12.00</Version>
+ </DocumentProperties>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>13395</WindowHeight>
+  <WindowWidth>24960</WindowWidth>
+  <WindowTopX>120</WindowTopX>
+  <WindowTopY>105</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Center"/>
+   <Borders/>
+   <Font ss:FontName="돋움" x:CharSet="129" x:Family="Modern" ss:Size="11"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s21" ss:Name="하이퍼링크">
+   <Font ss:FontName="돋움" x:CharSet="129" x:Family="Modern" ss:Size="11"
+    ss:Color="#0000FF" ss:Underline="Single"/>
+  </Style>
+  <Style ss:ID="s22">
+   <Alignment ss:Vertical="Center" ss:WrapText="1"/>
+  </Style>
+  <Style ss:ID="s23">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="돋움" x:CharSet="129" x:Family="Modern" ss:Size="11"
+    ss:Bold="1"/>
+   <Interior ss:Color="#CCCCFF" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s25">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="돋움" x:CharSet="129" x:Family="Modern" ss:Size="11"
+    ss:Bold="1"/>
+   <Interior ss:Color="#CCCCFF" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s26" ss:Parent="s21">
+   <Alignment ss:Vertical="Center"/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s28">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="돋움" x:CharSet="129" x:Family="Modern" ss:Size="11"
+    ss:Bold="1"/>
+   <Interior ss:Color="#CCCCFF" ss:Pattern="Solid"/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="Sheet1">
+  <Table ss:ExpandedColumnCount="17" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="60" ss:DefaultRowHeight="13.5">
+   <Column ss:AutoFitWidth="0" ss:Width="159.75"/>
+   <Column ss:AutoFitWidth="0" ss:Width="107.25"/>
+   <Column ss:AutoFitWidth="0" ss:Width="87"/>
+   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="39"/>
+   <Column ss:Index="17" ss:AutoFitWidth="0" ss:Width="159.75"/>
+   <Row ss:AutoFitHeight="0" ss:Height="21">
+    <Cell ss:MergeAcross="16" ss:StyleID="s28"><Data ss:Type="String">2. 통신레코드 (RR/RS $voClassName)</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="21">
+    <Cell ss:MergeAcross="6" ss:StyleID="s23"><Data ss:Type="String">기본항목</Data></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s23"><Data ss:Type="String">속성</Data></Cell>
+    <Cell ss:MergeAcross="4" ss:StyleID="s23"><Data ss:Type="String">Input/Output</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s23"><Data ss:Type="String">설명</Data></Cell>
+   </Row>
+   <Row ss:Height="40.5">
+    <Cell ss:StyleID="s23"><Data ss:Type="String">영문명</Data></Cell>
+    <Cell ss:StyleID="s23"><Data ss:Type="String">항목명</Data></Cell>
+    <Cell ss:StyleID="s23"><Data ss:Type="String">타입</Data></Cell>
+    <Cell ss:StyleID="s23"><Data ss:Type="String">길이</Data></Cell>
+    <Cell ss:StyleID="s23"><Data ss:Type="String">레벨</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">패턴&#10;(부호포함)</Data></Cell>
+    <Cell ss:StyleID="s23"><Data ss:Type="String">암호화</Data></Cell>
+    <Cell ss:StyleID="s23"><Data ss:Type="String">편집옵션</Data></Cell>
+    <Cell ss:StyleID="s23"><Data ss:Type="String">기본값</Data></Cell>
+    <Cell ss:StyleID="s23"><Data ss:Type="String">도움구분</Data></Cell>
+    <Cell ss:StyleID="s23"><Data ss:Type="String">필수구분</Data></Cell>
+    <Cell ss:StyleID="s23"><Data ss:Type="String">S</Data></Cell>
+    <Cell ss:StyleID="s23"><Data ss:Type="String">U</Data></Cell>
+    <Cell ss:StyleID="s23"><Data ss:Type="String">I</Data></Cell>
+    <Cell ss:StyleID="s23"><Data ss:Type="String">D</Data></Cell>
+    <Cell ss:StyleID="s23"><Data ss:Type="String"> </Data></Cell>
+   </Row>
+#macro( recursive $list $level $className)
+ #foreach($e in $list)
+  #if( "$!e.nameKo" == "" )
+   #set($korName = "")
+  #else
+   #set($korName = $!e.nameKo)
+  #end	## end if
+  #if( "$!e.length" == "" )
+   #set($length = "")
+  #else
+   #set($length = $e.length)
+  #end	## end if
+  #if( "$!e.description" == "" )
+   #set($description = "")
+  #else
+   #set($description = $e.description)
+  #end	## end if
+  #if($e.getRefClass() != "") ## Inner VO/List type
+   #set($indexCount = $e.getRefClass().lastIndexOf(".") +1)
+    <Row ss:AutoFitHeight="0" ss:Height="27">
+		<Cell><Data ss:Type="String">$className@$e.name</Data></Cell>
+		<Cell><Data ss:Type="String">$korName</Data></Cell>
+  		#if($e.type != "java.util.List")
+		 <Cell><Data ss:Type="String">$e.getRefClass().substring($indexCount)</Data></Cell>
+        #else
+         #set($typeIndex = $e.type.lastIndexOf(".") +1)
+		 <Cell><Data ss:Type="String">$e.type.substring($typeIndex)&lt;$e.getRefClass().substring($indexCount)&gt;</Data></Cell>
+        #end
+		<Cell><Data ss:Type="Number">$length</Data></Cell>
+		<Cell><Data ss:Type="Number">$level</Data></Cell>
+		<Cell ss:Index="17"><Data ss:Type="String">$description</Data></Cell>
+	</Row>
+   #set($levelCount = $level +1)
+   #recursive( $e.children $levelCount $e.name)
+  #else
+   #if ($e.type == "int" || $e.type == "java.math.BigDecimal" || $e.type == "java.math.BigInteger")
+    #set($type = "N")
+   #elseif ($e.type == "sli.in.util.Money")
+    #set($type = "Money")
+   #else
+    #set($type = "C")
+   #end
+   #if($e.parent.getRefClass() != "") ##
+    #if($e.type == "sli.in.util.Money")
+    #set($innerLevel = $level + 1)
+    #set($indexCount = $e.parent.getRefClass().lastIndexOf(".") +1)
+    <Row ss:AutoFitHeight="0" ss:Height="27">
+		<Cell><Data ss:Type="String">$e.parent.getRefClass().substring($indexCount)@$e.name</Data></Cell>
+		<Cell><Data ss:Type="String">$korName</Data></Cell>
+		<Cell><Data ss:Type="String">$type</Data></Cell>
+		<Cell><Data ss:Type="Number">0</Data></Cell>
+		<Cell><Data ss:Type="Number">$level</Data></Cell>
+		<Cell ss:Index="17"><Data ss:Type="String">$description</Data></Cell>
+	</Row>  
+	<Row ss:AutoFitHeight="0" ss:Height="27">
+		<Cell><Data ss:Type="String">Money@amount</Data></Cell>
+		<Cell><Data ss:Type="String">금액</Data></Cell>
+		<Cell><Data ss:Type="String">N</Data></Cell>
+		<Cell><Data ss:Type="Number">$length</Data></Cell>
+		<Cell><Data ss:Type="Number">$innerLevel</Data></Cell>
+		<Cell ss:Index="17"><Data ss:Type="String">금액</Data></Cell>
+	</Row>  
+	<Row ss:AutoFitHeight="0" ss:Height="27">
+		<Cell><Data ss:Type="String">Money@currency</Data></Cell>
+		<Cell><Data ss:Type="String">통화</Data></Cell>
+		<Cell><Data ss:Type="String">C</Data></Cell>
+		<Cell><Data ss:Type="Number">2</Data></Cell>
+		<Cell><Data ss:Type="Number">$innerLevel</Data></Cell>
+		<Cell ss:Index="17"><Data ss:Type="String">통화(원/달러 등 구분)</Data></Cell>
+	</Row>  
+    #else
+    #set($indexCount = $e.parent.getRefClass().lastIndexOf(".") +1)
+    <Row ss:AutoFitHeight="0" ss:Height="27">
+		<Cell><Data ss:Type="String">$e.parent.getRefClass().substring($indexCount)@$e.name</Data></Cell>
+		<Cell><Data ss:Type="String">$korName</Data></Cell>
+		<Cell><Data ss:Type="String">$type</Data></Cell>
+		<Cell><Data ss:Type="Number">$length</Data></Cell>
+		<Cell><Data ss:Type="Number">$level</Data></Cell>
+		<Cell ss:Index="17"><Data ss:Type="String">$description</Data></Cell>
+	</Row>
+	#end
+   #elseif($e.type == "sli.in.util.Money")
+    #set($innerLevel = $level + 1)
+    <Row ss:AutoFitHeight="0" ss:Height="27">
+		<Cell><Data ss:Type="String">$className@$e.name</Data></Cell>
+		<Cell><Data ss:Type="String">$korName</Data></Cell>
+		<Cell><Data ss:Type="String">$type</Data></Cell>
+		<Cell><Data ss:Type="Number">0</Data></Cell>
+		<Cell><Data ss:Type="Number">$level</Data></Cell>
+		<Cell ss:Index="17"><Data ss:Type="String">$description</Data></Cell>
+	</Row>  
+	<Row ss:AutoFitHeight="0" ss:Height="27">
+		<Cell><Data ss:Type="String">Money@amount</Data></Cell>
+		<Cell><Data ss:Type="String">금액</Data></Cell>
+		<Cell><Data ss:Type="String">N</Data></Cell>
+		<Cell><Data ss:Type="Number">$length</Data></Cell>
+		<Cell><Data ss:Type="Number">$innerLevel</Data></Cell>
+		<Cell ss:Index="17"><Data ss:Type="String">금액</Data></Cell>
+	</Row>  
+	<Row ss:AutoFitHeight="0" ss:Height="27">
+		<Cell><Data ss:Type="String">Money@currency</Data></Cell>
+		<Cell><Data ss:Type="String">통화</Data></Cell>
+		<Cell><Data ss:Type="String">C</Data></Cell>
+		<Cell><Data ss:Type="Number">2</Data></Cell>
+		<Cell><Data ss:Type="Number">$innerLevel</Data></Cell>
+		<Cell ss:Index="17"><Data ss:Type="String">통화(원/달러 등 구분)</Data></Cell>
+	</Row>  
+   #else
+    <Row ss:AutoFitHeight="0" ss:Height="27">
+		<Cell><Data ss:Type="String">$className@$e.name</Data></Cell>
+		<Cell><Data ss:Type="String">$korName</Data></Cell>
+		<Cell><Data ss:Type="String">$type</Data></Cell>
+		<Cell><Data ss:Type="Number">$length</Data></Cell>
+		<Cell><Data ss:Type="Number">$level</Data></Cell>
+		<Cell ss:Index="17"><Data ss:Type="String">$description</Data></Cell>
+	</Row>
+   #end ##end if
+  #end ##end if
+ #end ##end foreach
+#end ##end macro
+
+#recursive( $list 1 $className)
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <Selected/>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+ <Worksheet ss:Name="Sheet2">
+  <Table ss:ExpandedColumnCount="1" ss:ExpandedRowCount="1" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="60" ss:DefaultRowHeight="13.5">
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+ <Worksheet ss:Name="Sheet3">
+  <Table ss:ExpandedColumnCount="1" ss:ExpandedRowCount="1" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="60" ss:DefaultRowHeight="13.5">
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>

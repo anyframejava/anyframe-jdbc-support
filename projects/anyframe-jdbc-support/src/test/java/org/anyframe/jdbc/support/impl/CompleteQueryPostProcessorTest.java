@@ -23,9 +23,6 @@ import org.springframework.test.jdbc.JdbcTestUtils;
 @ContextConfiguration(locations = { "classpath:spring/context-*.xml" })
 public class CompleteQueryPostProcessorTest {
 
-	// @Autowired
-	// private CompleteQueryPostProcessor completeQueryPostProcessor;
-
 	@Autowired
 	private DataSource dataSource;
 
@@ -55,7 +52,6 @@ public class CompleteQueryPostProcessorTest {
 		assertEquals("admin", resultMap.get("logon_id"));
 		assertEquals("adminpw", resultMap.get("password"));
 
-		// check org.anyframe.jdbc.support.CompleteQueryPostProcessor Logger
-		// INFO Level logs
+		// org.anyframe.jdbc.support.p6spy.logging DEBUG Level logs
 	}
 }

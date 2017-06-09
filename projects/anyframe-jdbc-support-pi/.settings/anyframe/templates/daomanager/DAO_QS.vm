@@ -1,0 +1,52 @@
+#if(!$util.isEmpty(${dao.packageName}))
+package ${dao.packageName};
+
+#end
+
+## add query service import start
+import javax.inject.Inject;
+import org.anyframe.pagination.Page;
+import java.util.List;
+import org.anyframe.query.QueryService;
+import org.anyframe.query.dao.QueryServiceDaoSupport;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
+## add query service import end
+
+#foreach($importStatement in $importStatements)
+import ${importStatement};
+#end
+
+#if(!$util.isEmpty(${dao.voName}))
+import ${dao.voName};
+#end
+
+/**
+#foreach($eachline in ${dao.descriptionLines})
+ * ${eachline}
+#end
+ * @daoType
+ * author : $!{dao.userId}
+ * Class_Name(en) : $!{dao.name}
+ * class_Name(ko) : $!{dao.localName}
+ *
+ */
+public class ${dao.name} extends QueryServiceDaoSupport {
+
+	## setter injection & paging setting start 
+	@Value("#{contextProperties['pageSize'] ?: 10}")
+	int pageSize;
+
+	@Value("#{contextProperties['pageUnit'] ?: 10}")
+	int pageUnit;
+
+	@Inject
+	public void setQueryService(QueryService queryService) {
+		super.setQueryService(queryService);
+	}
+	## setter injection & paging setting end
+	
+#foreach($method in $dao.methodInfoList)
+#parse("dao_methods_qs.vm")
+#end
+}
